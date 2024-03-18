@@ -28,6 +28,33 @@ export default function Login({
     return redirect("/protected");
   };
 
+  const loginWithGoogle = async (formData: FormData) => {
+    "use server";
+
+    const origin = headers().get("origin");
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+        redirectTo: `${origin}/auth/v1/callback`,
+      },
+    });
+
+    if (error) {
+      return redirect("/login?message=Could not authenticate user");
+    }
+
+    if (data) {
+      console.log("로그인 됨.");
+      // return redirect("/auth/v1/callback");
+    }
+  };
+
   const signUp = async (formData: FormData) => {
     "use server";
 
@@ -113,6 +140,15 @@ export default function Login({
             {searchParams.message}
           </p>
         )}
+      </form>
+      <form>
+        <SubmitButton
+          formAction={loginWithGoogle}
+          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+          pendingText="Signing Up..."
+        >
+          Google Signup
+        </SubmitButton>
       </form>
     </div>
   );
