@@ -1,4 +1,4 @@
-export default function BackupLogo({ size = 24 }: { size?: number }) {
+export function BackupLogo({ size = 24 }: { size?: number }) {
   return (
     <svg
       width={size}

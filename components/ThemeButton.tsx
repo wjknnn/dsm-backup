@@ -7,10 +7,10 @@ export const ThemeButton = () => {
   return (
     <button
       id="darkModeToggle"
-      className="text-gray-600 dark:text-gray-400 dark:bg-red-500"
+      className="border border-grayLight1 dark:border-grayDark1 rounded-full text-black dark:text-white bg-white dark:bg-black fixed top-[120px] right-[40px] p-[8px_16px]"
       onClick={changeDark}
     >
-      Dark Mode 토글
+      Theme Change
     </button>
   );
 };

@@ -28,31 +28,22 @@ export default function Login({
     return redirect("/protected");
   };
 
-  const loginWithGoogle = async (formData: FormData) => {
+  const loginWithGithub = async () => {
     "use server";
 
-    const origin = headers().get("origin");
     const supabase = createClient();
+    const origin = headers().get("origin");
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-        redirectTo: `${origin}/auth/v1/callback`,
-      },
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
     });
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      console.error("GitHub OAuth login error:", error.message);
+      return redirect("/login?message=Could not authenticate with GitHub");
     }
 
-    if (data) {
-      console.log("로그인 됨.");
-      // return redirect("/auth/v1/callback");
-    }
+    // return redirect(`${origin}/auth/callback`);
   };
 
   const signUp = async (formData: FormData) => {
@@ -143,11 +134,11 @@ export default function Login({
       </form>
       <form>
         <SubmitButton
-          formAction={loginWithGoogle}
+          formAction={loginWithGithub}
           className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing Up..."
+          pendingText="Signing In with GitHub..."
         >
-          Google Signup
+          Github Signup
         </SubmitButton>
       </form>
     </div>

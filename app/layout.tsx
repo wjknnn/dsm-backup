@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { Navigator } from "@/components";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -11,8 +12,8 @@ const Pretendard = localFont({
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Backup",
+  description: "모두를 위한 디자인 피드백 서비스",
 };
 
 export default function RootLayout({
@@ -22,8 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={Pretendard.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
+      <body>
+        <main className="min-h-[100dvh] flex flex-col">
+          <Navigator />
           {children}
         </main>
       </body>
