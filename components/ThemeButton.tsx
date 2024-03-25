@@ -1,7 +1,19 @@
 "use client";
 
+import { useEffect } from "react";
+
 export const ThemeButton = () => {
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
   const changeDark = () => {
+    if (localStorage.getItem("theme") === "dark") {
+      localStorage.setItem("theme", "light");
+    } else {
+      localStorage.setItem("theme", "dark");
+    }
     document.documentElement.classList.toggle("dark");
   };
   return (
