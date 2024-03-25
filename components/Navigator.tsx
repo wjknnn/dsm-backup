@@ -14,11 +14,13 @@ export const Navigator = () => {
     <nav className="h-[80px] w-full flex justify-center border-b border-grayLight1 dark:border-grayDark2 z-50 sticky top-0 bg-white dark:bg-grayDark3">
       <div className="max-w-[1280px] px-[40px] w-full flex justify-between">
         <div className="flex items-center gap-[40px]">
-          <BackupFullLogo
-            width={109}
-            height={40}
-            className="text-black dark:text-white duration-200"
-          />
+          <Link href="/">
+            <BackupFullLogo
+              width={109}
+              height={40}
+              className="text-black duration-200 dark:text-white"
+            />
+          </Link>
           <div className="flex gap-[32px]">
             {link.map(({ name, link }) => (
               <Link

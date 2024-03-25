@@ -13,7 +13,7 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+    <div className="flex flex-col items-center flex-1 w-full gap-20">
       this is protected page.
     </div>
   );
