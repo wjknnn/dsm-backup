@@ -34,6 +34,29 @@ export default function Login({
     }
   };
 
+  const loginWithGoogle = async () => {
+    "use server";
+
+    const origin = headers().get("origin");
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("Google OAuth login error:", error.message);
+      return redirect("/login?message=Could not authenticate with Google");
+    }
+
+    if (data) {
+      return redirect(data.url);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center flex-1 w-full gap-2 px-8 sm:max-w-md">
       <Link
@@ -63,6 +86,13 @@ export default function Login({
           pendingText="Signing In with GitHub..."
         >
           Github Signup
+        </SubmitButton>
+        <SubmitButton
+          formAction={loginWithGoogle}
+          className="px-4 py-2 mb-2 border rounded-md border-foreground/20 text-foreground"
+          pendingText="Signing In with Google..."
+        >
+          Google Signup
         </SubmitButton>
       </form>
     </div>
