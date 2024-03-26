@@ -57,6 +57,29 @@ export default function Login({
     }
   };
 
+  const loginWithFacebook = async () => {
+    "use server";
+
+    const origin = headers().get("origin");
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "facebook",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("Facebook OAuth login error:", error.message);
+      return redirect("/login?message=Could not authenticate with Facebook");
+    }
+
+    if (data) {
+      return redirect(data.url);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center flex-1 w-full gap-2 px-8 sm:max-w-md">
       <Link
@@ -93,6 +116,13 @@ export default function Login({
           pendingText="Signing In with Google..."
         >
           Google Signup
+        </SubmitButton>
+        <SubmitButton
+          formAction={loginWithFacebook}
+          className="px-4 py-2 mb-2 border rounded-md border-foreground/20 text-foreground"
+          pendingText="Signing In with Facebook..."
+        >
+          Facebook Signup
         </SubmitButton>
       </form>
     </div>
