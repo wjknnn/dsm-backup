@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={Pretendard.className}>
       <body>
-        <main className="min-h-[100dvh] flex flex-col">
+        <main className="min-h-[100dvh] flex flex-col items-center">
           <Navigator />
           {children}
         </main>

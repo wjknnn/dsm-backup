@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
+import { Arrow, Facebook, Github, Google } from "@/assets";
 
 export default function Login({
   searchParams,
@@ -81,50 +82,48 @@ export default function Login({
   };
 
   return (
-    <div className="flex flex-col justify-center flex-1 w-full gap-2 px-8 sm:max-w-md">
-      <Link
-        href="/"
-        className="flex items-center px-4 py-2 text-sm text-black no-underline rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-grayDark2"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1"
+    <section className="flex flex-col gap-[64px] max-w-[480px] w-full p-[80px_40px_0]">
+      <div className="flex flex-col">
+        <Link
+          href="/"
+          className="flex items-center justify-center w-[40px] h-[40px] border border-grayLight1 rounded-[8px] [&>svg]:hover:translate-x-[-4px] hover:bg-grayLight2 dark:border-grayDark2 hover:dark:bg-grayDark2"
         >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{" "}
-        Back
-      </Link>
-      <form>
+          <Arrow />
+        </Link>
+        <h3 className="text-titleLarge2 mt-[12px]">로그인</h3>
+        <p className="text-bodyLarge">
+          소셜 로그인으로 빠르게 서비스를 이용해보세요.
+        </p>
+      </div>
+      <form className="flex flex-col gap-[12px]">
         <SubmitButton
-          formAction={loginWithGithub}
-          className="px-4 py-2 mb-2 border rounded-md border-foreground/20 text-foreground"
-          pendingText="Signing In with GitHub..."
+          formAction={loginWithFacebook}
+          className="flex items-center justify-between rounded-[16px] p-[16px_24px] border text-white border-grayLight1 dark:border-grayDark2 bg-[rgb(24,119,242)] hover:bg-[rgb(20,100,204)]"
+          pendingText="Facebook 로그인 중..."
         >
-          Github Signup
+          <Facebook />
+          <p className="text-bodyLarge1">Facebook 로그인</p>
+          <div className="w-[28px]"></div>
         </SubmitButton>
         <SubmitButton
           formAction={loginWithGoogle}
-          className="px-4 py-2 mb-2 border rounded-md border-foreground/20 text-foreground"
-          pendingText="Signing In with Google..."
+          className="flex items-center justify-between rounded-[16px] p-[16px_24px] border border-grayLight1 dark:border-grayDark2 hover:bg-grayLight2 dark:hover:bg-black"
+          pendingText="Google 로그인 중..."
         >
-          Google Signup
+          <Google />
+          <p className="text-bodyLarge1">Google 로그인</p>
+          <div className="w-[28px]"></div>
         </SubmitButton>
         <SubmitButton
-          formAction={loginWithFacebook}
-          className="px-4 py-2 mb-2 border rounded-md border-foreground/20 text-foreground"
-          pendingText="Signing In with Facebook..."
+          formAction={loginWithGithub}
+          className="flex items-center justify-between rounded-[16px] p-[16px_24px] border text-white border-grayLight1 dark:border-grayDark2 bg-[rgb(36,41,45)] hover:bg-black"
+          pendingText="Github 로그인 중..."
         >
-          Facebook Signup
+          <Github />
+          <p className="text-bodyLarge1">Github 로그인</p>
+          <div className="w-[28px]"></div>
         </SubmitButton>
       </form>
-    </div>
+    </section>
   );
 }

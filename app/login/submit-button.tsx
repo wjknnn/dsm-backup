@@ -14,7 +14,11 @@ export function SubmitButton({ children, pendingText, ...props }: Props) {
 
   return (
     <button {...props} type="submit" aria-disabled={pending}>
-      {isPending ? pendingText : children}
+      {isPending ? (
+        <p className="text-bodyLarge1 h-[28px]">{pendingText}</p>
+      ) : (
+        children
+      )}
     </button>
   );
 }
