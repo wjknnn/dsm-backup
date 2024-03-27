@@ -28,16 +28,11 @@ export async function AuthButton() {
       <div className="w-[40px] h-[40px] rounded-full bg-grayLight1 border border-grayBase cursor-pointer"></div>
     </div>
   ) : (
-    <>
-      <Link
-        href="/login"
-        className="rounded-full flex p-[8px_24px] bg-black dark:bg-white text-white dark:text-black"
-      >
-        로그인
-      </Link>
-      <Link href="/login" className="text-black text-bodyLarge dark:text-white">
-        회원가입
-      </Link>
-    </>
+    <Link
+      href="/login"
+      className="rounded-full flex p-[8px_24px] bg-black dark:bg-white text-white dark:text-black"
+    >
+      로그인
+    </Link>
   );
 }

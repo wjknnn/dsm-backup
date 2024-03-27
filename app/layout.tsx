@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import { Navigator } from "@/components";
+import { Footer, Navigator } from "@/components";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -27,6 +27,7 @@ export default function RootLayout({
         <main className="min-h-[100dvh] flex flex-col items-center">
           <Navigator />
           {children}
+          <Footer />
         </main>
       </body>
     </html>
