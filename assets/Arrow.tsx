@@ -1,14 +1,9 @@
 interface ArrowProp {
   size?: number;
   className?: string;
-  direction?: "top" | "right" | "bottom" | "left";
 }
 
-export const Arrow = ({
-  size = 24,
-  className = "",
-  direction = "left",
-}: ArrowProp) => {
+export const Arrow = ({ size = 24, className = "" }: ArrowProp) => {
   return (
     <svg
       width={size}

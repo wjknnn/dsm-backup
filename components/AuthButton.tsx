@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { ProfileModal } from "./ProfileModal";
 import { redirect } from "next/navigation";
 
 export async function AuthButton() {
@@ -8,7 +9,7 @@ export async function AuthButton() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
+  
   const signOut = async () => {
     "use server";
 
@@ -19,13 +20,10 @@ export async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4 text-black dark:text-white">
-      {user.email}
-      <form action={signOut}>
-        <button className="px-4 py-2 no-underline rounded-md bg-btn-background hover:bg-btn-background-hover">
-          Logout
-        </button>
-      </form>
-      <div className="w-[40px] h-[40px] rounded-full bg-grayLight1 border border-grayBase cursor-pointer"></div>
+      <Link href="?show=true">
+        <div className="w-[40px] h-[40px] rounded-full bg-grayLight1 border border-grayBase dark:bg-grayDark2 dark:border-grayDark15 overflow-hidden"></div>
+      </Link>
+      <ProfileModal logOut={signOut} email={user.email} name={user.user_metadata.name} />
     </div>
   ) : (
     <Link

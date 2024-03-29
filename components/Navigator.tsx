@@ -14,7 +14,7 @@ export const Navigator = () => {
     <nav className="h-[80px] w-full flex justify-center border-b border-grayLight1 dark:border-grayDark2 z-50 sticky top-0 bg-white dark:bg-grayDark3">
       <div className="max-w-[1280px] px-[40px] w-full flex justify-between">
         <div className="flex items-center gap-[40px]">
-          <Link href="/">
+          <Link href="/" className="z-[110]">
             <BackupFullLogo
               width={109}
               height={40}
@@ -26,7 +26,7 @@ export const Navigator = () => {
               <Link
                 key={name}
                 href={link}
-                className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white"
+                className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white z-[110]"
               >
                 {name}
               </Link>
