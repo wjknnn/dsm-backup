@@ -6,3 +6,4 @@ export { Github } from "./Github";
 export { Google } from "./Google";
 export { Logout } from "./Logout";
 export { Setting } from "./Setting";
+export { BrokenFile } from "./BrokenFile";
