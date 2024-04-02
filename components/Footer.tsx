@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="absolute bottom-0 flex items-center justify-center w-full p-[40px] border-t border-grayLight1 dark:border-grayDark2">
-      <div className="flex flex-col items-center gap-[16px] h-fit">
+    <footer className="absolute bottom-0 flex items-center justify-center w-full p-[40px] sm:p-[24px] border-t border-grayLight1 dark:border-grayDark2">
+      <div className="flex flex-col items-center gap-[16px] sm:gap-[8px] h-fit">
         <BackupLogo size={32} />
         <div className="flex gap-[12px]">
           <Link href="terms">

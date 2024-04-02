@@ -11,8 +11,8 @@ const link = [
 
 export const Navigator = () => {
   return (
-    <nav className="h-[80px] w-full flex justify-center border-b border-grayLight1 dark:border-grayDark2 z-50 sticky top-0 bg-white dark:bg-grayDark3">
-      <div className="max-w-[1280px] px-[40px] w-full flex justify-between">
+    <nav className="h-[80px] sm:h-[120px] sm:gap-[16px] sm:flex-col sm:items-center w-full flex justify-center border-b border-grayLight1 dark:border-grayDark2 z-50 sticky top-0 bg-white dark:bg-grayDark3">
+      <div className="max-w-[1280px] px-[40px] sm:px-[24px] w-full flex justify-between">
         <div className="flex items-center gap-[40px]">
           <Link href="/" className="z-[110]">
             <BackupFullLogo
@@ -21,7 +21,7 @@ export const Navigator = () => {
               className="text-black duration-200 dark:text-white"
             />
           </Link>
-          <div className="flex gap-[32px]">
+          <div className="flex gap-[32px] sm:hidden">
             {link.map(({ name, link }) => (
               <Link
                 key={name}
@@ -37,6 +37,17 @@ export const Navigator = () => {
           <AuthButton />
           <ThemeButton />
         </div>
+      </div>
+      <div className="flex gap-[32px] lg:hidden md:hidden max-w-[1280px] px-[24px] w-full">
+        {link.map(({ name, link }) => (
+          <Link
+            key={name}
+            href={link}
+            className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white"
+          >
+            {name}
+          </Link>
+        ))}
       </div>
     </nav>
   );

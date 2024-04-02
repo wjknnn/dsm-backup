@@ -39,7 +39,7 @@ export const ProfileModal = ({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute animate-in bg-white dark:bg-grayDark3 top-[64px] right-[40px] lg:right-[calc((100%-1200px)/2)] w-[280px] rounded-[16px] border border-grayLight1 dark:border-grayDark2 p-[8px] gap-[2px] flex flex-col shadow-[0_8px_24px_0_rgba(0,0,0,0.12)] items-stretch"
+          className="absolute animate-in bg-white dark:bg-grayDark3 top-[64px] sm:right-[24px] right-[40px] lg:right-[calc((100%-1200px)/2)] w-[280px] rounded-[16px] border border-grayLight1 dark:border-grayDark2 p-[8px] gap-[2px] flex flex-col shadow-[0_8px_24px_0_rgba(0,0,0,0.12)] items-stretch z-[120]"
         >
           <List link="/users">
             <div className="size-[36px] rounded-full bg-grayLight1 dark:bg-black border border-grayLight1 dark:border-grayDark15"></div>

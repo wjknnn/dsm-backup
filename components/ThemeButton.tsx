@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export const ThemeButton = () => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
     } else {

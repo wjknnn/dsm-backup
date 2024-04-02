@@ -82,7 +82,7 @@ export default function Login({
   };
 
   return (
-    <section className="flex flex-col gap-[64px] max-w-[480px] w-full p-[80px_40px_0]">
+    <section className="flex flex-col gap-[64px] sm:gap-[40px] max-w-[480px] w-full p-[80px_40px_0] sm:p-[10%_24px_0]">
       <div className="flex flex-col">
         <Link
           href="/"
@@ -90,7 +90,7 @@ export default function Login({
         >
           <Arrow />
         </Link>
-        <h3 className="text-titleLarge2 mt-[12px]">로그인</h3>
+        <h3 className="text-titleLarge2 sm:text-titleLarge mt-[12px] sm:mb-[8px]">로그인</h3>
         <p className="text-bodyLarge">
           소셜 로그인으로 빠르게 서비스를 이용해보세요.
         </p>
