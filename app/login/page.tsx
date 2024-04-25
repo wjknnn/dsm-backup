@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { SubmitButton } from "./submit-button";
-import { Arrow, Facebook, Github, Google } from "@/assets";
+import Link from 'next/link';
+import { headers } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+import { SubmitButton } from './submit-button';
+import { Arrow, Facebook, Github, Google } from '@/assets';
 
 export default function Login({
   searchParams,
@@ -11,23 +11,23 @@ export default function Login({
   searchParams: { message: string };
 }) {
   const loginWithGithub = async () => {
-    "use server";
+    'use server';
 
     console.log("i'm login with github");
 
-    const origin = headers().get("origin");
+    const origin = headers().get('origin');
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
+      provider: 'github',
       options: {
         redirectTo: `${origin}/auth/callback`,
       },
     });
 
     if (error) {
-      console.error("GitHub OAuth login error:", error.message);
-      return redirect("/login?message=Could not authenticate with GitHub");
+      console.error('GitHub OAuth login error:', error.message);
+      return redirect('/login?message=Could not authenticate with GitHub');
     }
 
     if (data) {
@@ -36,21 +36,21 @@ export default function Login({
   };
 
   const loginWithGoogle = async () => {
-    "use server";
+    'use server';
 
-    const origin = headers().get("origin");
+    const origin = headers().get('origin');
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
+      provider: 'google',
       options: {
         redirectTo: `${origin}/auth/callback`,
       },
     });
 
     if (error) {
-      console.error("Google OAuth login error:", error.message);
-      return redirect("/login?message=Could not authenticate with Google");
+      console.error('Google OAuth login error:', error.message);
+      return redirect('/login?message=Could not authenticate with Google');
     }
 
     if (data) {
@@ -59,21 +59,21 @@ export default function Login({
   };
 
   const loginWithFacebook = async () => {
-    "use server";
+    'use server';
 
-    const origin = headers().get("origin");
+    const origin = headers().get('origin');
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "facebook",
+      provider: 'facebook',
       options: {
         redirectTo: `${origin}/auth/callback`,
       },
     });
 
     if (error) {
-      console.error("Facebook OAuth login error:", error.message);
-      return redirect("/login?message=Could not authenticate with Facebook");
+      console.error('Facebook OAuth login error:', error.message);
+      return redirect('/login?message=Could not authenticate with Facebook');
     }
 
     if (data) {
@@ -86,11 +86,14 @@ export default function Login({
       <div className="flex flex-col">
         <Link
           href="/"
+          aria-label="Go back"
           className="flex items-center justify-center w-[40px] h-[40px] border border-grayLight1 rounded-[8px] [&>svg]:hover:translate-x-[-4px] hover:bg-grayLight2 dark:border-grayDark2 hover:dark:bg-grayDark2"
         >
           <Arrow />
         </Link>
-        <h3 className="text-titleLarge2 sm:text-titleLarge mt-[12px] sm:mb-[8px]">로그인</h3>
+        <h3 className="text-titleLarge2 sm:text-titleLarge mt-[12px] sm:mb-[8px]">
+          로그인
+        </h3>
         <p className="text-bodyLarge">
           소셜 로그인으로 빠르게 서비스를 이용해보세요.
         </p>

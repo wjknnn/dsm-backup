@@ -1,5 +1,5 @@
-import { BackupLogo } from "@/assets";
-import Link from "next/link";
+import { BackupLogo } from '@/assets';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
@@ -7,10 +7,13 @@ export const Footer = () => {
       <div className="flex flex-col items-center gap-[16px] sm:gap-[8px] h-fit">
         <BackupLogo size={32} />
         <div className="flex gap-[12px]">
-          <Link href="terms">
+          <Link href="terms" aria-label="Read service terms">
             <p className="text-bodyStrong">이용약관</p>
           </Link>
-          <Link href="privacy">
+          <Link
+            href="privacy"
+            aria-label="Read policy about privacy information"
+          >
             <p className="text-bodyStrong">개인정보취급방침</p>
           </Link>
         </div>

@@ -1,5 +1,5 @@
-import { BrokenFile } from "@/assets";
-import Link from "next/link";
+import { BrokenFile } from '@/assets';
+import Link from 'next/link';
 
 export default function NotFoundPage() {
   return (
@@ -17,6 +17,7 @@ export default function NotFoundPage() {
       </div>
       <Link
         href="/"
+        aria-label="Go to home"
         className="rounded-full flex p-[8px_24px] bg-black dark:bg-white text-white dark:text-black"
       >
         홈으로 돌아가기

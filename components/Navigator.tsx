@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { AuthButton, ThemeButton } from ".";
-import { BackupFullLogo } from "@/assets";
+import Link from 'next/link';
+import { AuthButton, ThemeButton } from '.';
+import { BackupFullLogo } from '@/assets';
 
 const link = [
-  { name: "피드백", link: "/feedback" },
-  { name: "토픽", link: "/topic" },
-  { name: "레퍼런스", link: "/reference" },
-  { name: "팁 저장소", link: "/tip" },
+  { name: '피드백', link: '/feedback' },
+  { name: '토픽', link: '/topic' },
+  { name: '레퍼런스', link: '/reference' },
+  { name: '팁 저장소', link: '/tip' },
 ];
 
 export const Navigator = () => {
@@ -14,7 +14,7 @@ export const Navigator = () => {
     <nav className="h-[80px] sm:h-[120px] sm:gap-[16px] sm:flex-col sm:items-center w-full flex justify-center border-b border-grayLight1 dark:border-grayDark2 z-50 sticky top-0 bg-white dark:bg-grayDark3">
       <div className="max-w-[1280px] px-[40px] sm:px-[24px] w-full flex justify-between">
         <div className="flex items-center gap-[40px]">
-          <Link href="/" className="z-[110]">
+          <Link href="/" aria-label="Go to home" className="z-[110]">
             <BackupFullLogo
               width={109}
               height={40}
@@ -26,6 +26,7 @@ export const Navigator = () => {
               <Link
                 key={name}
                 href={link}
+                aria-label={`Go to ${name}`}
                 className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white z-[110]"
               >
                 {name}
@@ -43,6 +44,7 @@ export const Navigator = () => {
           <Link
             key={name}
             href={link}
+            aria-label={`Go to ${name}`}
             className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white"
           >
             {name}
