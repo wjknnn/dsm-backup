@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AuthButton, ThemeButton } from '.';
+import { AuthButton, ThemeButton } from '..';
 import { BackupFullLogo } from '@/assets';
 
 const link = [
@@ -39,13 +39,17 @@ export const Navigator = () => {
           <ThemeButton />
         </div>
       </div>
-      <div className="flex gap-[32px] lg:hidden md:hidden max-w-[1280px] px-[24px] w-full">
+      <div className="flex gap-[32px] lg:hidden md:hidden max-w-[1280px] px-[24px] w-full sm:overflow-x-scroll">
+        <div className="absolute left-0 w-full md:hidden lg:hidden">
+          <div className="absolute left-0 w-6 h-6 bg-gradient-to-r dark:from-grayDark3 from-white"></div>
+          <div className="absolute right-0 w-6 h-6 bg-gradient-to-l dark:from-grayDark3 from-white"></div>
+        </div>
         {link.map(({ name, link }) => (
           <Link
             key={name}
             href={link}
             aria-label={`Go to ${name}`}
-            className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white"
+            className="text-bodyLarge text-grayDark1 hover:text-black dark:hover:text-white text-nowrap"
           >
             {name}
           </Link>

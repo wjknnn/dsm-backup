@@ -17,10 +17,10 @@ export const Footer = () => {
             <p className="text-bodyStrong">개인정보취급방침</p>
           </Link>
         </div>
-        <p className="text-body2 text-grayDark1">
+        <p className="text-center text-body2 text-grayDark1">
           Github: wjknnn 이메일: winrightchoi@gmail.com
         </p>
-        <p className="text-body2 text-grayDark1">
+        <p className="text-center text-body2 text-grayDark1">
           © 2024 Backup All rights reserved.
         </p>
       </div>

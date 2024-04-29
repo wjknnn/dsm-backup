@@ -36,3 +36,7 @@ body {
 p {
   word-break: keep-all;
 }
+
+::-webkit-scrollbar {
+  height: 0;
+}
