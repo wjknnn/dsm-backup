@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 30000,
 });
 
-instance.interceptors.response.use(undefined, (err) => {
-  throw err;
-});
-
-export default instance;
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    return Promise.reject(error);
+  }
+);

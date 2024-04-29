@@ -1,13 +1,18 @@
-interface InputProps {
-  title?: string;
-  placeholder?: string;
+'use client';
+
+import { InputHTMLAttributes } from 'react';
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
+  number?: boolean;
 }
 
 export const Input = ({
   title,
   placeholder = '입력...',
   error,
+  number,
+  ...props
 }: InputProps) => {
   return (
     <div className="w-full flex flex-col gap-[8px]">
@@ -20,6 +25,13 @@ export const Input = ({
         } rounded-[12px] outline-offset-4 border text-bodyLarge placeholder:text-grayDark1 p-[15px]`}
         type="text"
         placeholder={placeholder}
+        autoComplete="off"
+        onChange={(e) =>
+          number
+            ? (e.target.value = e.target.value.replace(/[^1-3]/g, ''))
+            : null
+        }
+        {...props}
       />
     </div>
   );

@@ -1,19 +1,21 @@
+import { type ComponentProps } from 'react';
+
 type KindType = 'primary' | 'gray' | 'white' | 'outline';
 type SizeType = 'small' | 'medium' | 'large';
 
-interface ButtonProps {
-  children?: React.ReactNode;
+type Props = ComponentProps<'button'> & {
   kind?: KindType;
   size?: SizeType;
   disable?: boolean;
-}
+};
 
 export const Button = ({
   kind = 'primary',
   size = 'medium',
   disable,
   children,
-}: ButtonProps) => {
+  ...props
+}: Props) => {
   const KIND_STYLE: {
     [key in KindType]: { enabled: string; disabled: string };
   } = {
@@ -55,6 +57,7 @@ export const Button = ({
           ? KIND_STYLE[kind].disabled + ' cursor-not-allowed'
           : KIND_STYLE[kind].enabled
       } ${SIZE_STYLE[size]} flex items-center justify-center rounded-[12px]`}
+      {...props}
     >
       <p className="text-bodyLarge">{children}</p>
     </button>

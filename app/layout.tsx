@@ -1,19 +1,20 @@
-import localFont from "next/font/local";
-import "./globals.css";
-import { Footer, Navigator } from "@/components";
+import localFont from 'next/font/local';
+import './globals.css';
+import { Footer, Navigator } from '@/components';
+import { QueryProvider } from '@/utils/providers/QueryProvider';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  : 'http://localhost:3000';
 
 const Pretendard = localFont({
-  src: "./PretendardVariable.woff2",
+  src: './PretendardVariable.woff2',
 });
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Backup",
-  description: "모두를 위한 디자인 피드백 서비스",
+  title: 'Backup',
+  description: '모두를 위한 디자인 피드백 서비스',
 };
 
 export default function RootLayout({
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={Pretendard.className}>
       <body>
-        <main className="min-h-[100dvh] flex flex-col items-center">
-          <Navigator />
-          {children}
-          <Footer />
-        </main>
+        <QueryProvider>
+          <main className="min-h-[100dvh] flex flex-col items-center">
+            <Navigator />
+            {children}
+            <Footer />
+          </main>
+        </QueryProvider>
       </body>
     </html>
   );
