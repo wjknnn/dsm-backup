@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { ProfileModal } from './ProfileModal';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 export async function AuthButton() {
   const supabase = createClient();
@@ -14,6 +15,9 @@ export async function AuthButton() {
 
   const signOut = async () => {
     'use server';
+
+    cookies().delete('token');
+    cookies().delete('userId');
 
     const supabase = createClient();
     await supabase.auth.signOut();

@@ -82,7 +82,7 @@ export default function Login({
   };
 
   return (
-    <section className="flex flex-col gap-[64px] sm:gap-[40px] max-w-[480px] w-full p-[80px_40px_0] sm:p-[10%_24px_0]">
+    <section className="flex flex-col gap-[64px] sm:gap-[40px] max-w-[480px] w-full p-[80px_40px_0] sm:p-[40px_24px_64px]">
       <div className="flex flex-col">
         <Link
           href="/"
