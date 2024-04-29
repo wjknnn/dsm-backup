@@ -11,7 +11,7 @@ export const Banner = () => {
   } = supabase.storage.from('test').getPublicUrl('testBanner2.png');
 
   return (
-    <article className="w-full h-[320px] border border-grayDark2 rounded-2xl overflow-hidden relative sm:absolute sm:top-0 sm:left-0 sm:rounded-none sm:border-none">
+    <article className="w-full h-[320px] border border-grayDark2 rounded-2xl overflow-hidden relative sm:absolute sm:top-0 sm:left-0 sm:rounded-none sm:border-none text-white">
       <Image
         src={publicUrl}
         alt="banner1"
@@ -20,7 +20,7 @@ export const Banner = () => {
         className="object-cover w-full h-full"
       />
       <div className="absolute top-0 left-0 z-10 flex flex-col justify-center w-full h-full px-20 sm:px-8">
-        <h4 className="font-bold tracking-tight text-titleLarge sm:text-[32px] leading-[48px] sm:leading-[40px] text-white">
+        <h4 className="font-bold tracking-tight text-titleLarge sm:text-[32px] leading-[48px] sm:leading-[40px]">
           내 디자인을
           <br />
           새롭게.
@@ -30,7 +30,7 @@ export const Banner = () => {
         </p>
         <Link
           href="/feedback"
-          className="p-[8px_24px] rounded-full bg-grayDark3 hover:bg-grayDark2 w-fit border border-grayDark2 text-white"
+          className="p-[8px_24px] rounded-full bg-grayDark3 hover:bg-grayDark2 w-fit border border-grayDark2"
         >
           <p className="text-bodyLarge">피드백 요청하기</p>
         </Link>
