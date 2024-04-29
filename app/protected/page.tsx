@@ -1,5 +1,5 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 export default async function ProtectedPage() {
   const supabase = createClient();
@@ -8,10 +8,8 @@ export default async function ProtectedPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   if (!user) {
-    return redirect("/login");
+    return redirect('/login');
   }
 
   return (

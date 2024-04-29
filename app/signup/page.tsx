@@ -1,6 +1,10 @@
+import { redirect } from 'next/navigation';
 import { SignupInput } from './signupInput';
+import { isSignedUser } from '@/utils';
 
-export default function Signup() {
+export default async function Signup() {
+  if (await isSignedUser()) return redirect('/protected');
+
   return (
     <section className="flex flex-col max-w-[448px] w-full p-[64px_24px] gap-[64px]">
       <div className="flex flex-col">

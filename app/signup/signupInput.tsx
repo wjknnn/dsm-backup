@@ -2,12 +2,9 @@ import { Input } from '@/components';
 import { redirect } from 'next/navigation';
 import { SubmitButton } from './submitButton';
 import { signup } from '@/apis';
-import { isSignedUser } from '@/utils';
 import { getToken, getUserId } from '@/utils/cookie/server';
 
-export const SignupInput = async () => {
-  if (await isSignedUser()) return redirect('/protected');
-
+export const SignupInput = () => {
   const signUp = async (formData: FormData) => {
     'use server';
 

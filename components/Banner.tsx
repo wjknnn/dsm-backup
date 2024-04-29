@@ -11,7 +11,7 @@ export const Banner = () => {
   } = supabase.storage.from('test').getPublicUrl('testBanner2.png');
 
   return (
-    <article className="w-full h-[320px] border border-grayDark2 rounded-2xl overflow-hidden relative">
+    <article className="w-full h-[320px] border border-grayDark2 rounded-2xl overflow-hidden relative sm:absolute sm:top-0 sm:left-0 sm:rounded-none sm:border-none">
       <Image
         src={publicUrl}
         alt="banner1"
@@ -20,12 +20,12 @@ export const Banner = () => {
         className="object-cover w-full h-full"
       />
       <div className="absolute top-0 left-0 z-10 flex flex-col justify-center w-full h-full px-20 sm:px-8">
-        <h4 className="font-bold tracking-tight text-titleLarge leading-[48px] text-white">
+        <h4 className="font-bold tracking-tight text-titleLarge sm:text-[32px] leading-[48px] sm:leading-[40px] text-white">
           내 디자인을
           <br />
           새롭게.
         </h4>
-        <p className="text-bodyLarge text-[20px] text-grayBase m-[16px_0_20px]">
+        <p className="text-bodyLarge !text-[20px] sm:!text-[16px] text-grayDark1 sm:text-grayBase m-[16px_0_20px]">
           내 디자인을 위한 다양한 백업
         </p>
         <Link
