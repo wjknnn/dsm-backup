@@ -1,31 +1,25 @@
-"use client";
+'use client';
 
-import { useLayoutEffect } from "react";
+import { Theme } from '@/assets';
+import { useTheme } from 'next-themes';
 
 export const ThemeButton = () => {
-  useLayoutEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, []);
+  const { setTheme, resolvedTheme } = useTheme();
+
   const changeDark = () => {
-    if (localStorage.getItem("theme") === "dark") {
-      localStorage.setItem("theme", "light");
-    } else {
-      localStorage.setItem("theme", "dark");
-    }
-    document.documentElement.classList.toggle("dark");
+    if (resolvedTheme === 'dark') setTheme('light');
+    if (resolvedTheme === 'light') setTheme('dark');
   };
+
   return (
     <button
-      id="darkModeToggle"
-      className="border border-grayLight1 dark:border-grayDark1 rounded-full text-black dark:text-white bg-white dark:bg-black fixed top-[120px] right-[40px] p-[8px_16px]"
       onClick={changeDark}
+      className="flex items-center gap-[12px] p-[8px_12px] rounded-[12px] hover:bg-grayLight2 dark:hover:bg-grayDark2 w-full"
     >
-      Theme Change
+      <div className="size-[36px] rounded-[8px] border border-grayLight1 dark:border-grayDark15 flex justify-center items-center">
+        <Theme size={20} className="text-grayDark1" />
+      </div>
+      <p className="text-body2">테마 변경</p>
     </button>
   );
 };

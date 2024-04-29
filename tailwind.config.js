@@ -6,6 +6,9 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    transitionDuration: {
+      DEFAULT: '200ms',
+    },
     extend: {
       colors: {
         background: 'hsl(var(--background))',

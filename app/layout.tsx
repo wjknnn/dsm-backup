@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { Footer, Navigator } from '@/components';
-import { QueryProvider } from '@/utils/providers/QueryProvider';
+import { QueryProvider, ThemesProvider } from '@/utils';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -23,14 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={Pretendard.className}>
+    <html lang="en" className={Pretendard.className} suppressHydrationWarning>
       <body>
         <QueryProvider>
-          <main className="min-h-[100dvh] flex flex-col items-center">
-            <Navigator />
-            {children}
-            <Footer />
-          </main>
+          <ThemesProvider>
+            <main className="min-h-[100dvh] flex flex-col items-center">
+              <Navigator />
+              {children}
+              <Footer />
+            </main>
+          </ThemesProvider>
         </QueryProvider>
       </body>
     </html>

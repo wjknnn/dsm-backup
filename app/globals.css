@@ -24,10 +24,6 @@
   }
 }
 
-* {
-  transition: 0.2s;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -35,6 +31,12 @@ body {
 
 p {
   word-break: keep-all;
+}
+
+svg,
+button,
+a {
+  transition: 0.2s;
 }
 
 ::-webkit-scrollbar {

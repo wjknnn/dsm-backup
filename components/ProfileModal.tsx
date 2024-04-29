@@ -3,6 +3,7 @@
 import { Arrow, Logout, Setting } from '@/assets';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ThemeButton } from './ThemeButton';
 
 const List = ({
   children,
@@ -62,6 +63,7 @@ export const ProfileModal = ({
               </div>
               <p className="text-body2">설정</p>
             </List>
+            <ThemeButton />
             <form action={logOut}>
               <button className="flex items-center gap-[12px] p-[8px_12px] rounded-[12px] hover:bg-grayLight2 dark:hover:bg-grayDark2 w-full">
                 <div className="size-[36px] rounded-[8px] border border-grayLight1 dark:border-grayDark15 flex justify-center items-center">
