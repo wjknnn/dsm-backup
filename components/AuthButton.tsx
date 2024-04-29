@@ -22,9 +22,6 @@ export async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4 text-black dark:text-white">
-      <Link href="?show=true" aria-label="Open user modal">
-        <div className="w-[40px] h-[40px] rounded-full bg-grayLight1 border border-grayBase dark:bg-grayDark2 dark:border-grayDark15 overflow-hidden"></div>
-      </Link>
       <ProfileModal
         logOut={signOut}
         email={user.email}
