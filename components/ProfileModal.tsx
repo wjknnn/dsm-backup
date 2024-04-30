@@ -4,6 +4,7 @@ import { Arrow, Logout, Setting } from '@/assets';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ThemeButton } from './ThemeButton';
+import Image from 'next/image';
 
 const List = ({
   children,
@@ -35,8 +36,16 @@ export const ProfileModal = ({
     <>
       <div
         onClick={() => setOpen(true)}
-        className="w-[40px] h-[40px] rounded-full bg-grayLight1 border border-grayBase dark:bg-grayDark2 dark:border-grayDark15 overflow-hidden"
-      ></div>
+        className="w-[40px] h-[40px] rounded-full bg-grayLight2 border border-grayBase dark:bg-grayDark2 dark:border-grayDark15 overflow-hidden"
+      >
+        <Image
+          src={'/images/DefaultProfile.png'}
+          alt="profile image"
+          width={40}
+          height={40}
+          className="object-cover w-full h-full"
+        />
+      </div>
       {open && (
         <div
           onClick={() => setOpen(false)}
@@ -47,7 +56,15 @@ export const ProfileModal = ({
             className="absolute animate-in bg-white dark:bg-grayDark3 top-[64px] sm:right-[24px] right-[40px] lg:right-[calc((100%-1200px)/2)] w-[280px] rounded-[16px] border border-grayLight1 dark:border-grayDark2 p-[8px] gap-[2px] flex flex-col shadow-[0_8px_24px_0_rgba(0,0,0,0.12)] items-stretch z-[120]"
           >
             <List link="/users">
-              <div className="size-[36px] rounded-full bg-grayLight1 dark:bg-black border border-grayLight1 dark:border-grayDark15"></div>
+              <div className="size-[36px] rounded-full bg-grayLight2 dark:bg-grayDark2 border border-grayBase dark:border-grayDark15 overflow-hidden">
+                <Image
+                  src={'/images/DefaultProfile.png'}
+                  alt="profile image"
+                  width={40}
+                  height={40}
+                  className="object-cover w-full h-full"
+                />
+              </div>
               <div className="flex flex-col gap-[2px] flex-1">
                 <p className="text-bodyLarge">{name || 'Unknown User'}</p>
                 <p className="text-body text-grayDark1">

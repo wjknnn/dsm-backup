@@ -16,7 +16,7 @@ type TipData = {
 export const TipBox = async () => {
   const supabase = createClient();
   const { data } = await supabase.from('tip').select('*').limit(3);
-  console.log(data);
+
   return (
     <section className="grid w-full grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-1">
       {data?.map((value: TipData) => (
