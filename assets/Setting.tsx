@@ -1,6 +1,6 @@
-import { IconProps } from "./iconProp";
+import { IconProps } from './iconProp';
 
-export const Setting = ({ size = 24, className = "" }: IconProps) => {
+export const Setting = ({ size = 24, className = '', ...props }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ export const Setting = ({ size = 24, className = "" }: IconProps) => {
       viewBox="0 0 24 24"
       fill="none"
       className={className}
+      {...props}
     >
       <path
         fill="currentColor"

@@ -8,3 +8,4 @@ export { Logout } from './Logout';
 export { Setting } from './Setting';
 export { BrokenFile } from './BrokenFile';
 export { Theme } from './Theme';
+export { Vote } from './vote';

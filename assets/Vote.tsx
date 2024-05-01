@@ -1,6 +1,6 @@
 import { IconProps } from './iconProp';
 
-export const Arrow = ({ size = 24, className = '', ...props }: IconProps) => {
+export const Vote = ({ size = 24, className = '', ...props }: IconProps) => {
   return (
     <svg
       width={size}
@@ -12,7 +12,7 @@ export const Arrow = ({ size = 24, className = '', ...props }: IconProps) => {
       {...props}
     >
       <path
-        d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"
+        d="M21 3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.455L2 22.5V4a1 1 0 0 1 1-1h18Zm-1 2H4v13.385L5.763 17H20V5Zm-7 2v8h-2V7h2Zm4 2v6h-2V9h2Zm-8 2v4H7v-4h2Z"
         fill="currentColor"
       />
     </svg>

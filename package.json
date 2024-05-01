@@ -8,7 +8,7 @@
   "dependencies": {
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
-    "@tanstack/react-query": "^5.32.0",
+    "@tanstack/react-query": "^5.32.1",
     "@tanstack/react-query-devtools": "^5.32.0",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.8",
