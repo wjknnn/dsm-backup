@@ -23,10 +23,12 @@ export const TipBox = async () => {
         <Link href={`/tip/${value.id}`} key={value.id}>
           <article className="flex flex-col object-cover w-full gap-3 [&>.thumbnail]:hover:-translate-y-2">
             <Image
-              src={process.env.NEXT_PUBLIC_IMAGE_URL! + value.thumbnail}
+              src={
+                process.env.NEXT_PUBLIC_IMAGE_URL! + value.thumbnail + '.webp'
+              }
               alt={value.title + ' thumbnail image'}
-              width={400}
-              height={200}
+              width={384}
+              height={216}
               className="w-full overflow-hidden transition-transform thumbnail aspect-video outline-grayLight2 dark:outline-grayDark2 -outline-offset-1 outline outline-1 rounded-2xl"
             />
             <div className="flex flex-col gap-2 px-1">

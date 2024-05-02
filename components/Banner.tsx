@@ -8,10 +8,10 @@ export const Banner = () => {
 
   const {
     data: { publicUrl },
-  } = supabase.storage.from('test').getPublicUrl('testBanner2.png');
+  } = supabase.storage.from('test').getPublicUrl('testBanner2.webp');
 
   return (
-    <article className="w-full h-[320px] border border-grayDark2 rounded-2xl overflow-hidden relative sm:absolute sm:top-0 sm:left-0 sm:rounded-none sm:border-none text-white">
+    <article className="w-full h-[320px] border border-grayLight2 dark:border-grayDark2 rounded-2xl overflow-hidden relative sm:absolute sm:top-0 sm:left-0 sm:rounded-none sm:border-none text-white">
       <Image
         src={publicUrl}
         alt="banner1"
@@ -25,7 +25,7 @@ export const Banner = () => {
           <br />
           새롭게.
         </h4>
-        <p className="text-bodyLarge !text-[20px] sm:!text-[16px] text-grayDark1 sm:text-grayBase m-[16px_0_20px]">
+        <p className="text-bodyLarge !text-[20px] sm:!text-[16px] text-grayLight2 sm:text-grayBase m-[16px_0_20px]">
           내 디자인을 위한 다양한 백업
         </p>
         <Link
@@ -35,7 +35,7 @@ export const Banner = () => {
           <p className="text-bodyLarge">피드백 요청하기</p>
         </Link>
       </div>
-      <div className="absolute top-0 left-0 w-[40%] min-w-[240px] h-full bg-gradient-to-r from-black"></div>
+      <div className="absolute top-0 left-0 w-[40%] min-w-[240px] h-full bg-gradient-to-r from-[rgba(0,0,0,0.32)]"></div>
       <div className="absolute z-10 flex items-center gap-3 bottom-8 right-10">
         <div className="flex justify-center w-[72px] p-[4px_12px] rounded-full bg-[rgba(0,0,0,0.24)] backdrop-blur-md outline outline-1 outline-white -outline-offset-1">
           <p className="text-bodyLarge">1 / 2</p>
