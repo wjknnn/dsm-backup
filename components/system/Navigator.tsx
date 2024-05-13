@@ -38,7 +38,10 @@ export const Navigator = () => {
           <AuthButton />
         </div>
       </div>
-      <div className="flex gap-[32px] lg:hidden md:hidden max-w-[1280px] px-[24px] w-full sm:overflow-x-scroll">
+      <div
+        id="navList"
+        className="flex gap-[32px] lg:hidden md:hidden max-w-[1280px] px-[24px] w-full sm:overflow-x-scroll"
+      >
         <div className="absolute left-0 w-full md:hidden lg:hidden">
           <div className="absolute left-0 w-6 h-6 bg-gradient-to-r dark:from-grayDark3 from-white"></div>
           <div className="absolute right-0 w-6 h-6 bg-gradient-to-l dark:from-grayDark3 from-white"></div>

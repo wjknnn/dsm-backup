@@ -9,11 +9,11 @@ import Link from 'next/link';
 export const TopicBox = () => {
   const { data } = useSuspenseQuery({
     queryKey: ['main topic'],
-    queryFn: () => getTopicList(),
+    queryFn: () => getTopicList(3),
   });
 
   return (
-    <section className="grid grid-cols-4 gap-6 lg:gap-2 md:grid-cols-2 sm:grid-cols-1">
+    <section className="grid grid-cols-4 gap-6 lg:gap-2 md:grid-cols-3 sm:grid-cols-1">
       {data?.data.map((value) => (
         <Link
           key={value.id}
