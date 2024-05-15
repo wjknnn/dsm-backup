@@ -9,3 +9,5 @@ export { Setting } from './Setting';
 export { BrokenFile } from './BrokenFile';
 export { Theme } from './Theme';
 export { Vote } from './Vote';
+export { List } from './List';
+export { Post } from './Post';
