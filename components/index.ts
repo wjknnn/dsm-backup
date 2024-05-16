@@ -8,3 +8,5 @@ export { Button } from './system/Button';
 export { Banner } from './Banner';
 export { TipBox } from './tip/TipBox';
 export { TopicBox } from './topic/TopicBox';
+export { FeedbackChip } from './feedback/FeedbackChip';
+export { FeedbackSkeleton } from './feedback/FeedbackSkeleton';
