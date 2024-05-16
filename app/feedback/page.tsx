@@ -24,7 +24,7 @@ export default async function FeedbackPage() {
         href="/feedback/write"
         className="z-[100001] size-16 fixed bottom-9 right-9"
       >
-        <div className="flex justify-center items-center tooltip size-16 rounded-[28px] bg-black dark:bg-white text-white dark:text-black drop-shadow-[0_2px_24px_rgba(0,0,0,0.24)] dark:drop-shadow-[0_2px_24px_rgba(255,255,255,0.24)]">
+        <div className="flex justify-center items-center tooltip size-16 rounded-[28px] bg-black dark:bg-white text-white dark:text-black drop-shadow-[0_2px_24px_rgba(0,0,0,0.24)] active:scale-95 transition">
           <Q size={30} />
           <span className="tooltiptext tooltip-left text-bodyLarge2">
             피드백 요청글 작성하기

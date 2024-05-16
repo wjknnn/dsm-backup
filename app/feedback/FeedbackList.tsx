@@ -77,11 +77,13 @@ export const FeedbackList = ({ max }: { max: number }) => {
       <section>
         {data ? (
           data.data.map((value, index) => (
-            <Link key={index} href={`/feedback/${value.id}`}>
+            <Link key={index} href={`/feedback/${value.id}`} className="group">
               <article className="min-h-[200px] w-full flex sm:flex-col-reverse gap-16 sm:gap-4 p-[24px_0_32px] border-b border-grayLight2 dark:border-grayDark2">
                 <div className="flex flex-col w-full gap-3 py-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-subtitle text-pretty">{value.title}</h4>
+                    <h4 className="transition-all text-subtitle text-pretty group-visited:text-grayDark15 dark:group-visited:text-grayBase group-hover:font-bold">
+                      {value.title}
+                    </h4>
                     <FeedbackChip status={value.status} />
                   </div>
                   <p
