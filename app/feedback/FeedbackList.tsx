@@ -61,12 +61,14 @@ export const FeedbackList = ({ max }: { max: number }) => {
           <button
             onClick={() => setIsList(true)}
             className={isList ? 'text-black dark:text-white' : ''}
+            aria-label="read to small list"
           >
             <List size={20} />
           </button>
           <button
             onClick={() => setIsList(false)}
             className={!isList ? 'text-black dark:text-white' : ''}
+            aria-label="read to large list"
           >
             <Post size={20} />
           </button>
