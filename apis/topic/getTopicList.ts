@@ -1,16 +1,8 @@
+import { TopicListType } from '@/types';
 import { instance } from '../interceptor';
 
-type TopicListData = {
-  id: number;
-  title: string;
-  image: string;
-  numA: number;
-  numB: number;
-  created_at: Date;
-}[];
-
 export const getTopicList = async (limit?: number) => {
-  return await instance<TopicListData>({
+  return await instance<TopicListType>({
     method: 'GET',
     url: `/topic/all${limit ? `?limit=${limit}` : ''}`,
   });

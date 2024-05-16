@@ -30,8 +30,8 @@ export default function RootLayout({
             <main className="min-h-[100dvh] flex flex-col items-center">
               <Navigator />
               {children}
-              <Footer />
             </main>
+            <Footer />
           </ThemesProvider>
         </QueryProvider>
       </body>
