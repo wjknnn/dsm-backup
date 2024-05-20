@@ -3,10 +3,13 @@ import { instance } from '../interceptor';
 
 export const getFeedbackList = async (
   page: number,
-  order?: FeedbackOrderType
+  order?: FeedbackOrderType,
+  limit?: number
 ) => {
   return await instance<FeedbackListType>({
     method: 'GET',
-    url: `/feedback/all?page=${page}&order=${order || 'latest'}`,
+    url: `/feedback/all?page=${page}&order=${order || 'latest'}&limit=${
+      limit || 10
+    }`,
   });
 };

@@ -12,3 +12,4 @@ export { Vote } from './Vote';
 export { List } from './List';
 export { Post } from './Post';
 export { Q } from './Q';
+export { ImageIcon } from './ImageIcon';
