@@ -11,5 +11,5 @@ export const getFeedbackList = async (
     url: `/feedback/all?page=${page}&order=${order || 'latest'}&limit=${
       limit || 10
     }`,
-  });
+  }).then((response) => response.data);
 };
