@@ -1,6 +1,6 @@
 import { FeedbackStatusType } from './feedbackStatusType';
 
-export type FeedbackListType = {
+export type FeedbackType = {
   id: number;
   title: string;
   explanation: string;
@@ -12,4 +12,6 @@ export type FeedbackListType = {
   feedback: number;
   created_at: string;
   users: { name: string; profile_image: string };
-}[];
+};
+
+export type FeedbackListType = FeedbackType[];
