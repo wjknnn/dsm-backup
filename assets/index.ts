@@ -15,3 +15,5 @@ export { Q } from './Q';
 export { ImageIcon } from './ImageIcon';
 export { Pen } from './Pen';
 export { Chat } from './Chat';
+export { Share } from './Share';
+export { More } from './More';
