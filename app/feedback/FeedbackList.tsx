@@ -1,6 +1,6 @@
 'use client';
 
-import { getFeedbackList } from '@/apis/feedback/getFeedbackList';
+import { getFeedbackList } from '@/apis';
 import { ImageIcon, List, Post } from '@/assets';
 import { FeedbackChip, FeedbackSkeleton } from '@/components';
 import { FeedbackOrderType } from '@/types';
@@ -87,7 +87,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
       </div>
       <section>
         {data ? (
-          data.data.map((value, index) => (
+          data.map((value, index) => (
             <Link key={index} href={`/feedback/${value.id}`} className="group">
               {isList ? (
                 <article className="flex items-center gap-4 py-3 border-b border-grayLight2 dark:border-grayDark2 text-body2 sm:flex-col sm:items-start sm:gap-2">
@@ -127,7 +127,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
                 <article className="min-h-[200px] w-full flex sm:flex-col-reverse gap-16 sm:gap-4 p-[24px_0_32px] border-b border-grayLight2 dark:border-grayDark2">
                   <div className="flex flex-col w-full gap-3 py-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="transition-all text-subtitle text-pretty group-visited:text-grayDark15 dark:group-visited:text-grayBase group-hover:font-bold">
+                      <h4 className="transition-all text-subtitle text-pretty group-hover:font-bold">
                         {value.title}
                       </h4>
                       <FeedbackChip status={value.status} />

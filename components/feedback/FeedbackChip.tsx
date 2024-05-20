@@ -23,8 +23,8 @@ export const FeedbackChip = ({
   return (
     <div
       className={`w-fit ${
-        large ? 'p-[4px_12px]' : 'p-[2px_8px]'
-      } rounded-lg text-bodyStrong ${statusStyle}`}
+        large ? 'p-[4px_12px] text-bodyLarge2' : 'p-[2px_8px] text-bodyStrong'
+      } rounded-lg ${statusStyle}`}
     >
       <p className="dark:brightness-150 text-nowrap">{status}</p>
     </div>
