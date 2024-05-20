@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { SignupInput } from './signupInput';
-import { isSignedUser } from '@/utils';
+import { isSignedUser } from '@/utils/serverIndex';
 
 export default async function Signup() {
   if (await isSignedUser()) return redirect('/protected');
