@@ -1,4 +1,4 @@
-import { getCookie } from '../cookie';
+import { getCookie } from '../cookies';
 
 export const getUserId = () => {
   return getCookie('userId');
