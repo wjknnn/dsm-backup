@@ -13,3 +13,5 @@ export { List } from './List';
 export { Post } from './Post';
 export { Q } from './Q';
 export { ImageIcon } from './ImageIcon';
+export { Pen } from './Pen';
+export { Chat } from './Chat';
