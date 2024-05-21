@@ -26,6 +26,11 @@ export default function RootLayout({
     <html lang="en" className={Pretendard.className} suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-5353082485151424" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5353082485151424"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body>
         <QueryProvider>
