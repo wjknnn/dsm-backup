@@ -10,3 +10,5 @@ export { TipBox } from './tip/TipBox';
 export { TopicBox } from './topic/TopicBox';
 export { FeedbackChip } from './feedback/FeedbackChip';
 export { FeedbackSkeleton } from './feedback/FeedbackSkeleton';
+export { GoogleAd } from './ad/GoogleAd';
+export { GoogleAdSet } from './ad/GoogleAdSet';

@@ -3,7 +3,7 @@
 import { getFeedback } from '@/apis';
 import { Chat, More, Pen, Share } from '@/assets';
 import { FeedbackChip } from '@/components';
-import { GoogleAd } from '@/components/GoogleAd';
+import { GoogleAd } from '@/components';
 import { relativeTime } from '@/utils';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
