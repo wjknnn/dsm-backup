@@ -24,6 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={Pretendard.className} suppressHydrationWarning>
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-5353082485151424" />
+      </head>
       <body>
         <QueryProvider>
           <ThemesProvider>
