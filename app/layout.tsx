@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className={Pretendard.className} suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-5353082485151424" />
+        <GoogleAdSet pId="5353082485151424" />
       </head>
       <body>
         <QueryProvider>
@@ -38,7 +39,6 @@ export default function RootLayout({
           </ThemesProvider>
         </QueryProvider>
       </body>
-      <GoogleAdSet pId="5353082485151424" />
     </html>
   );
 }
