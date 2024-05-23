@@ -1,7 +1,7 @@
 import { Q } from '@/assets';
 import Link from 'next/link';
 import { FeedbackDetail } from './FeedbackDetail';
-import { GoogleAd, GoogleAdUnit } from '@/components';
+import { AdBanner } from '@/components/ad/AdBanner';
 
 export default function FeedbackDetailPage({
   params,
@@ -15,9 +15,11 @@ export default function FeedbackDetailPage({
       <main className="flex animate-in max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
         <FeedbackDetail id={id} />
         <div className="min-w-[251px] bg-blue-500">
-          <GoogleAdUnit>
-            <GoogleAd />
-          </GoogleAdUnit>
+          <AdBanner
+            dataAdFormat="fluid"
+            dataAdLayoutKey="-75+eu-h-24+5o"
+            dataAdSlot="8058470646"
+          />
         </div>
       </main>
       <Link
