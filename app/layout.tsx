@@ -1,7 +1,8 @@
 import localFont from 'next/font/local';
 import './globals.css';
-import { Footer, GoogleAdSet, Navigator } from '@/components';
+import { Footer, Navigator } from '@/components';
 import { QueryProvider, ThemesProvider } from '@/utils';
+import Script from 'next/script';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -25,8 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={Pretendard.className} suppressHydrationWarning>
       <head>
-        <meta name="google-adsense-account" content="ca-pub-5353082485151424" />
-        <GoogleAdSet pId="5353082485151424" />
+        <meta
+          name="google-adsense-account"
+          content={`ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS}`}
+        />
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS}`}
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
       </head>
       <body>
         <QueryProvider>
