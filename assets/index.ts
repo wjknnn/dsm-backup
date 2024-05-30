@@ -17,3 +17,4 @@ export { Pen } from './Pen';
 export { Chat } from './Chat';
 export { Share } from './Share';
 export { More } from './More';
+export { Close } from './Close';
