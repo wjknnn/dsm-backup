@@ -7,6 +7,10 @@
     @apply dark:bg-grayDark3 bg-white;
     @apply dark:text-white text-black;
   }
+  input:focus,
+  textarea:focus {
+    @apply outline-grayBase;
+  }
 }
 
 .animate-in {

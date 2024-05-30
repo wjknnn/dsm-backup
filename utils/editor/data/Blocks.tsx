@@ -8,15 +8,12 @@ import {
   BlockAlign,
   BlockBold,
   BlockEditor,
-  BlockItalic,
-  BlockLine,
   BlockStrikethrough,
   BlockUnderline,
   BlockUnderStrikethrough,
   BlockList,
   BlockNumbering,
   BlockQuotation,
-  BlockShortCode,
 } from './blockLayout';
 import { EditorBlockReplacer } from './EditorBlockReplacer';
 import { atomOneDark, CodeBlock } from 'react-code-blocks';
@@ -147,7 +144,11 @@ export class Blocks {
 
     if (Blocks.regex.line.test(block)) {
       list.push(
-        <BlockLine key={key('line', index)} id={key('block', index)} />
+        <div
+          className="w-full min-h-[2px] h-[2px] rounded-sm bg-grayLight1 dark:bg-grayDark2 my-2"
+          key={key('line', index)}
+          id={key('block', index)}
+        />
       );
       return;
     }
@@ -418,23 +419,40 @@ export class Blocks {
       }
       block = block.substring(target.length);
       if (tag === '`') {
-        arr.push(<BlockShortCode key={Math.random()}>{str}</BlockShortCode>);
+        arr.push(
+          <span
+            className="bg-grayLight2 dark:bg-grayDark2 text-blue-500 text-bodyStrong p-[1px_4px] rounded-[4px]"
+            key={Math.random()}
+          >
+            {str}
+          </span>
+        );
       } else if (tag === '*' || tag === '_') {
         const checked = this.chk(str, bold, true, underline, strike);
         if (italic) arr.push(...checked);
-        else arr.push(<BlockItalic key={Math.random()}>{checked}</BlockItalic>);
+        else
+          arr.push(
+            <span className="italic" key={Math.random()}>
+              {checked}
+            </span>
+          );
       } else if (tag === '**') {
         const checked = this.chk(str, true, italic, underline, strike);
         if (bold) arr.push(...checked);
-        else arr.push(<BlockBold key={Math.random()}>{checked}</BlockBold>);
+        else
+          arr.push(
+            <span className="font-bold" key={Math.random()}>
+              {checked}
+            </span>
+          );
       } else if (tag === '***') {
         const checked = this.chk(str, true, true, underline, strike);
         if (bold) arr.push(...checked);
         else
           arr.push(
-            <BlockBold key={Math.random()}>
-              <BlockItalic>{checked}</BlockItalic>
-            </BlockBold>
+            <span className="font-bold" key={Math.random()}>
+              <span className="italic">{checked}</span>
+            </span>
           );
       } else if (tag === '__') {
         const checked = this.chk(str, bold, italic, true, strike);
@@ -569,30 +587,53 @@ export class Blocks {
   };
 
   static P = ({ ...props }) => (
-    <MoonerText typography={'P'} $lineHeight={'1.5'} {...props} />
+    <span
+      className="text-bodyLarge text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
 
   static H1 = ({ ...props }) => (
-    <MoonerText margin={'16px 0 0 0'} typography={'H1'} {...props} />
+    <span
+      className="-mb-4 text-titleLarge2 text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
-
   static H2 = ({ ...props }) => (
-    <MoonerText margin={'13px 0 0 0'} typography={'H2'} {...props} />
+    <span
+      className="mt-3 text-titleLarge text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
 
   static H3 = ({ ...props }) => (
-    <MoonerText margin={'11px 0 0 0'} typography={'H3'} {...props} />
+    <span
+      className="mt-2 text-title text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
 
   static H4 = ({ ...props }) => (
-    <MoonerText margin={'7px 0 0 0'} typography={'H4'} {...props} />
+    <span
+      className="mt-2 text-subtitle text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
+
   static H5 = ({ ...props }) => (
-    <MoonerText margin={'5px 0 0 0'} typography={'H5'} {...props} />
+    <span
+      className="mt-2 text-bodyLarge2 text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
+
   static H6 = ({ ...props }) => (
-    <MoonerText margin={'4px 0 0 0'} typography={'H6'} {...props} />
+    <span
+      className="mt-2 text-bodyStrong text-grayDark3 dark:text-grayLight2"
+      {...props}
+    />
   );
+
   static Img = ({
     url,
     alt,
@@ -620,6 +661,9 @@ export class Blocks {
               anim.start('show');
             }}
             alt={alt}
+            className={`cursor-pointer w-[90%] h-[80%] object-contain sm:w-[70%] sm:h-[70%] ${
+              border ? 'rounded-2xl' : ''
+            }`}
             $border={border}
             onContextMenu={(v) => v.preventDefault()}
             onDragStart={(v) => v.preventDefault()}
@@ -637,7 +681,11 @@ export class Blocks {
             {children}
           </Image>
         </ImgDiv>
-        <DisplayDiv $display={show} $position={'fixed'}>
+        <div
+          className={`${
+            show ? 'flex' : 'hidden'
+          } fixed left-0 top-0 w-full h-[100dvh] z-[1000] transform-none`}
+        >
           <Background
             animate={anim}
             duration={0.5}
@@ -669,7 +717,7 @@ export class Blocks {
               {children}
             </Image>
           </Background>
-        </DisplayDiv>
+        </div>
       </>
     );
   };
@@ -695,18 +743,9 @@ const Image = styled.img<{ width?: string; height?: string; $border?: string }>`
 `;
 const Background = styled(motions.keyDiv)`
   backdrop-filter: blur(6px);
-  width: 100%;
   height: 100%;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-`;
-const DisplayDiv = styled.div<{ $display: boolean; $position?: string }>`
-  position: ${(props) => props.$position ?? 'unset'};
-  display: ${(props) => (props.$display ? 'block' : 'none')};
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 50;
 `;

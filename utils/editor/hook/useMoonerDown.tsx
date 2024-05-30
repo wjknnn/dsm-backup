@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react';
 import MoonerDownEditor from '@/utils/editor/components/MoonerDownEditor';
 import { Blocks } from '@/utils/editor/data/Blocks';
-import styled from 'styled-components';
-import { RenderDiv } from '@/utils/editor/Style';
 
 const useMoonerDown = (text?: string) => {
   const [texts, setTexts] = useState<string>(text ?? '');
@@ -22,7 +20,14 @@ const useMoonerDown = (text?: string) => {
   return {
     texts,
     Editor,
-    Result: <RenderDiv ref={renderRef}>{Blocks.compile(texts)}</RenderDiv>,
+    Result: (
+      <div
+        className="flex flex-col flex-1 h-full gap-1 p-3 overflow-y-auto whitespace-pre-line"
+        ref={renderRef}
+      >
+        {Blocks.compile(texts)}
+      </div>
+    ),
   };
 };
 

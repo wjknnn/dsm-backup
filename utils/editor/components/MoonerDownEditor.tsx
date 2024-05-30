@@ -1,8 +1,5 @@
 'use client';
 
-import styled from 'styled-components';
-import { Icon } from './Icon';
-import { Txt } from './Txt';
 import { Regex } from '../regex';
 import {
   Dispatch,
@@ -14,12 +11,8 @@ import {
   useState,
   RefObject,
 } from 'react';
-import { AlignType } from '../data/blockInterface';
 import { Blocks } from '../data/Blocks';
-import { motions } from '../motions';
-import { all, any, key } from '../utils';
-import { colors } from './colors';
-import { MDTextArea } from '@/utils/editor/Style';
+import { any, key } from '../utils';
 
 interface UndoData {
   str: string;
@@ -37,22 +30,7 @@ interface Props {
 const MoonerDownEditor = ({ texts, setTexts, renders, placeholder }: Props) => {
   const [undo, setUndo] = useState<UndoData[]>([]);
   const [undoIndex, setUndoIndex] = useState<number>(0);
-  const [context, setContext] = useState<{ x: number; y: number } | undefined>(
-    undefined
-  );
   const editorRef = useRef<HTMLTextAreaElement>(null);
-
-  const isRangeSelected = (
-    element: HTMLTextAreaElement | undefined = undefined
-  ) => {
-    if (element) {
-      setTexts(element.value);
-    } else {
-      const edit = editorRef.current;
-      if (!edit) return false;
-      return edit.selectionStart != edit.selectionEnd;
-    }
-  };
 
   const autoComplete = (str: string, rangeOnly: boolean = false): boolean => {
     const edit = editorRef.current;
@@ -490,323 +468,23 @@ const MoonerDownEditor = ({ texts, setTexts, renders, placeholder }: Props) => {
     }, 20);
   };
 
-  const setAlign = (align: AlignType) => {
-    const edit = editorRef.current;
-    if (!edit) return false;
-    edit.focus();
-
-    const start = edit.selectionStart;
-    const end = edit.selectionEnd;
-    let firstEnter = edit.value.lastIndexOf('\n', start - 1) + 1;
-    let lastEnter = edit.value.indexOf('\n', end);
-    if (firstEnter < 0) firstEnter = 0;
-    if (lastEnter < 0) lastEnter = edit.value.length;
-    let append = 0;
-    const alignedText = edit.value
-      .substring(firstEnter, lastEnter)
-      .split(/\n/)
-      .map((block) => {
-        if (block.length <= 0 || Blocks.regex.quotation.test(block))
-          return block;
-        const checks = Blocks.regex.align.exec(block);
-        if (checks) {
-          const [, , text] = checks;
-          switch (align) {
-            case 'right':
-              return `>${text}>`;
-            case 'left':
-              append -= 2;
-              return text;
-            case 'center':
-              return `=${text}=`;
-          }
-        } else {
-          switch (align) {
-            case 'right':
-              append += 2;
-              return `>${block}>`;
-            case 'left':
-              return block;
-            case 'center':
-              append += 2;
-              return `=${block}=`;
-          }
-        }
-      });
-    edit.value =
-      edit.value.substring(0, firstEnter) +
-      alignedText.join('\n') +
-      edit.value.substring(lastEnter);
-    edit.setSelectionRange(firstEnter, end + append);
-    updateText(edit);
-    registerUndo();
-  };
-
-  const setStyle = (
-    bold: boolean = false,
-    italic: boolean = false,
-    underline: boolean = false,
-    strikethrough: boolean = false
-  ) => {
-    const edit = editorRef.current;
-    if (!edit) return false;
-    edit.focus();
-
-    let start = edit.selectionStart;
-    let end = edit.selectionEnd;
-    const select = edit.value.substring(start, end);
-    const split = select.split(/\n/);
-
-    const modify = (tags: string[]) => {
-      let firstTag = split[0];
-      let lastTag = split[split.length - 1];
-
-      const tag = tags[0];
-      const length = tag.length;
-      if (any(tags, (t) => firstTag.startsWith(t))) start += length;
-      if (any(tags, (t) => lastTag.endsWith(t))) end -= length;
-
-      const first = edit.value.substring(start - length, start);
-      const last = edit.value.substring(end, end + length);
-
-      const isAppend = all(tags, (t) => first != t || last != t);
-
-      if (!isAppend) {
-        if (any(tags, (t) => firstTag.startsWith(t)))
-          firstTag = firstTag.substring(length, firstTag.length);
-        if (any(tags, (t) => firstTag.endsWith(t)))
-          firstTag = firstTag.substring(0, firstTag.length - length);
-
-        if (any(tags, (t) => lastTag.startsWith(t)))
-          lastTag = lastTag.substring(length, lastTag.length);
-        if (any(tags, (t) => lastTag.endsWith(t)))
-          lastTag = lastTag.substring(0, lastTag.length - length);
-      }
-
-      let append = 0;
-      const text = [
-        firstTag + (isAppend ? tag : ''),
-        ...split.slice(1, split.length - 1).map((value) => {
-          if (value.length <= 0) return value;
-          for (let t of tags) {
-            if (value.startsWith(t) && value.endsWith(t)) {
-              append -= length * 2;
-              return value.substring(length, value.length - length);
-            }
-          }
-          append += length * 2;
-          return `${tag}${value}${tag}`;
-        }),
-        (isAppend ? tag : '') + lastTag,
-      ];
-
-      if (isAppend) {
-        edit.value =
-          edit.value.substring(0, start) +
-          tag +
-          text.join('\n') +
-          tag +
-          edit.value.substring(end);
-        edit.setSelectionRange(start + length, end + length * 3 + append);
-      } else {
-        edit.value =
-          edit.value.substring(0, start - length) +
-          text.join('\n') +
-          edit.value.substring(end + length);
-        edit.setSelectionRange(start - length, end - length * 3 + append);
-      }
-    };
-
-    const modifySingle = (tags: string[]) => {
-      const tag = tags[0];
-      const length = tag.length;
-      const first = edit.value.substring(start - length, start);
-      const last = edit.value.substring(end, end + length);
-      if (any(tags, (t) => first == t && last == t)) {
-        edit.value =
-          edit.value.substring(0, start - length) +
-          select +
-          edit.value.substring(end + length);
-        edit.setSelectionRange(start - length, end - length);
-      } else {
-        edit.value =
-          edit.value.substring(0, start) +
-          tag +
-          select +
-          tag +
-          edit.value.substring(end);
-        edit.setSelectionRange(start + length, end + length);
-      }
-    };
-
-    if (italic) {
-      if (split.length > 1) {
-        modify(['_', '*']);
-      } else {
-        modifySingle(['_', '*']);
-      }
-    }
-
-    if (bold) {
-      if (split.length > 1) {
-        modify(['**']);
-      } else {
-        modifySingle(['**']);
-      }
-    }
-
-    if (underline) {
-      if (split.length > 1) {
-        modify(['__']);
-      } else {
-        modifySingle(['__']);
-      }
-    }
-
-    if (strikethrough) {
-      if (split.length > 1) {
-        modify(['~~']);
-      } else {
-        modifySingle(['~~']);
-      }
-    }
-    updateText(edit);
-    registerUndo();
-  };
-
   return (
-    <>
-      {context && (
-        <Context
-          delay={0}
-          duration={0.35}
-          $left={`${context.x}px`}
-          $top={`${context.y}px`}
-        >
-          {isRangeSelected() && (
-            <IconContext>
-              <IconBody onClick={() => setStyle(true)}>
-                <StyleText $bold>B</StyleText>
-              </IconBody>
-              <IconBody onClick={() => setStyle(false, true)}>
-                <StyleText $italic>B</StyleText>
-              </IconBody>
-              <IconBody onClick={() => setStyle(false, false, true)}>
-                <StyleText $under>B</StyleText>
-              </IconBody>
-              <IconBody onClick={() => setStyle(false, false, false, true)}>
-                <StyleText $strike>B</StyleText>
-              </IconBody>
-            </IconContext>
-          )}
-          <IconContext>
-            <IconBody onClick={() => setAlign('left')}>
-              <Icon name={'alignLeft'} size={24} />
-            </IconBody>
-            <IconBody onClick={() => setAlign('center')}>
-              <Icon name={'alignCenter'} size={24} />
-            </IconBody>
-            <IconBody onClick={() => setAlign('right')}>
-              <Icon name={'alignRight'} size={24} />
-            </IconBody>
-          </IconContext>
-          <InnerContext>
-            <Txt onClick={() => autoComplete('[]($)')}>링크 삽입</Txt>
-          </InnerContext>
-          <InnerContext>
-            <Txt onClick={() => autoComplete('![]($)')}>이미지 삽입</Txt>
-          </InnerContext>
-        </Context>
-      )}
-      <MDTextArea
-        defaultValue={texts}
-        ref={editorRef}
-        onClick={() => setContext(undefined)}
-        onMouseDown={(event: any) => {
-          if (event.button == 2) event.preventDefault();
-          else if (event.button == 0) {
-            blockFocus(event.currentTarget);
-          }
-        }}
-        onPaste={onPaste}
-        onInput={onInput}
-        onKeyDown={onKeyDown}
-        placeholder={placeholder}
-        onContextMenu={(event: any) => {
-          event.preventDefault();
-          setContext({ x: event.pageX + 6, y: event.pageY + 6 });
-        }}
-      />
-    </>
+    <textarea
+      className="flex flex-1 p-[15px] resize-none text-bodyLarge rounded-xl border border-grayLight1 bg-grayLight2 dark:bg-grayDark2 dark:border-grayDark15"
+      defaultValue={texts}
+      ref={editorRef}
+      onMouseDown={(event: any) => {
+        if (event.button == 2) event.preventDefault();
+        else if (event.button == 0) {
+          blockFocus(event.currentTarget);
+        }
+      }}
+      onPaste={onPaste}
+      onInput={onInput}
+      onKeyDown={onKeyDown}
+      placeholder={placeholder}
+    />
   );
 };
-
-const StyleText = styled.span<{
-  $bold?: boolean;
-  $under?: boolean;
-  $strike?: boolean;
-  $italic?: boolean;
-}>`
-  font-family: Pretendard, Prontandard, sans-serif;
-  font-size: 18px;
-  color: white;
-  font-weight: ${(props) => (props.$bold ? '900' : '400')};
-  text-decoration-line: ${(props) =>
-    props.$strike ? 'line-through' : props.$under ? 'underline' : 'none'};
-  font-style: ${(props) => (props.$italic ? 'italic' : 'unset')};
-  margin-right: ${(props) => (props.$italic ? '2px' : '0')};
-  user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-`;
-
-const IconBody = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 30px;
-  background-color: ${colors.gray8};
-  transition: background-color 0.1s;
-
-  &:hover {
-    background-color: ${colors.gray6};
-  }
-`;
-
-const IconContext = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  padding: 3px 0;
-`;
-
-const InnerContext = styled.div`
-  margin: 0 10px;
-  padding: 8px 6px;
-  transition: background-color 0.1s;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: ${colors.gray8};
-  }
-`;
-
-const Context = styled(motions.fadeDiv)<{ $top: string; $left: string }>`
-  position: fixed;
-  top: ${(props) => props.$top};
-  left: ${(props) => props.$left};
-  padding: 10px 0;
-  display: flex;
-  width: 200px;
-  height: auto;
-  gap: 6px;
-  border-radius: 8px;
-  background-color: ${colors.gray9};
-  transition: all 0.25s;
-  flex-direction: column;
-`;
 
 export default MoonerDownEditor;

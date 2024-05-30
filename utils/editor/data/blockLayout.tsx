@@ -56,8 +56,7 @@ const QuotationTexts = styled.div`
 const QuotationDiv = styled.div`
   display: flex;
   gap: 10px;
-  //width: 14px;
-  //justify-content: flex-start;
+  padding: 8px 0;
 `;
 
 const QuotationItem = styled.div`
@@ -65,13 +64,6 @@ const QuotationItem = styled.div`
   width: 3px;
   border-radius: 30px;
   background-color: ${colors.gray8};
-`;
-
-export const BlockShortCode = styled.span`
-  background-color: ${colors.gray8};
-  border-radius: 3px;
-  padding: 1px 3px;
-  color: ${colors.blue4};
 `;
 
 export const BlockAlign = styled.div<{ $align: AlignType; $tab?: string }>`
@@ -92,15 +84,6 @@ export const BlockAlign = styled.div<{ $align: AlignType; $tab?: string }>`
   }
 `;
 
-export const BlockLine = styled.div`
-  width: 100%;
-  height: 2px;
-  min-height: 2px;
-  border-radius: 10px;
-  background-color: ${colors.gray7};
-  margin: 4px 0;
-`;
-
 export const BlockBold = styled.span`
   font-weight: bold;
 `;
@@ -118,8 +101,4 @@ export const BlockStrikethrough = styled.span`
 export const BlockUnderStrikethrough = styled.span`
   text-decoration-line: underline line-through;
   text-decoration-style: solid;
-`;
-
-export const BlockItalic = styled.span`
-  font-style: italic;
 `;
