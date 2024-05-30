@@ -11,3 +11,4 @@ export { TopicBox } from './topic/TopicBox';
 export { FeedbackChip } from './feedback/FeedbackChip';
 export { FeedbackSkeleton } from './feedback/FeedbackSkeleton';
 export { AdBanner } from './ad';
+export { Tag } from './feedback/Tag';

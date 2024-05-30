@@ -22,7 +22,7 @@ export const Input = ({
           error
             ? 'bg-criticalBackground border-critical text-critical'
             : 'bg-grayLight2 dark:bg-grayDark2 border-grayLight1 dark:border-grayDark15'
-        } rounded-[12px] outline-offset-4 border text-bodyLarge placeholder:text-grayDark1 p-[15px]`}
+        } rounded-[12px] border text-bodyLarge placeholder:text-grayDark1 p-[15px]`}
         type="text"
         placeholder={placeholder}
         autoComplete="off"
