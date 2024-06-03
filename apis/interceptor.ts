@@ -1,4 +1,4 @@
-import { removeCookie, setCookie } from '@/utils';
+import { setCookie } from '@/utils';
 import { createClient } from '@/utils/supabase/client';
 import axios from 'axios';
 
