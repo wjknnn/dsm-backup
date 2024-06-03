@@ -1,6 +1,8 @@
 'use client';
 
+import { uploadFeedback } from '@/apis';
 import { Button, Input, Tag } from '@/components';
+import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -32,8 +34,16 @@ export const WriteSection = () => {
     setTags(updateTags);
   };
 
-  const submitFeedback = () => {
+  const submitFeedback = async () => {
+    const token = getToken() || '';
     console.log({ title, texts, tags });
+    await uploadFeedback(token, {
+      title: title,
+      content: texts,
+      tags: [...tags],
+    })
+      .then(() => router.push('/feedback'))
+      .catch((err) => alert(err));
   };
 
   return (
