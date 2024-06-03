@@ -39,9 +39,12 @@ export const FeedbackList = ({ max }: { max: number }) => {
   }, []);
 
   const handleIsList = (value: boolean) => {
-    setIsList(value);
-    if (typeof window !== 'object') return;
-    localStorage.setItem('isList', `${value}`);
+    if (isList !== value) {
+      setIsList(value);
+      setPage((prev) => (value ? Math.ceil(prev / 2) : prev * 2 - 1));
+      if (typeof window !== 'object') return;
+      localStorage.setItem('isList', `${value}`);
+    }
   };
 
   const isOrder = (orderType: FeedbackOrderType) =>
@@ -179,7 +182,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
         ) : null}
       </section>
       <div className="flex justify-center gap-1 py-20">
-        {[...new Array(2)].map((_, i) => (
+        {[...new Array(isList ? Math.ceil(max / 2) : max)].map((_, i) => (
           <button
             key={i}
             onClick={() => setPage(i + 1)}
