@@ -4,6 +4,7 @@ import { getFeedback } from '@/apis';
 import { Chat, More, Pen, Share } from '@/assets';
 import { FeedbackChip } from '@/components';
 import { relativeTime } from '@/utils';
+import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
@@ -12,6 +13,8 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
     queryKey: ['Feedback Detail', id],
     queryFn: () => getFeedback(id),
   });
+
+  const { Result } = useMoonerDown(data?.content);
 
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-10">
@@ -36,8 +39,8 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
             </div>
           </div>
           <article className="pb-6">
-            <p className="text-bodyLarge text-grayDark3 dark:text-grayLight2">
-              {data.content}
+            <p className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
+              {Result}
             </p>
           </article>
           {data.tags && (

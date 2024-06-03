@@ -9,7 +9,7 @@ export const getCookie = (name: string) => {
 };
 
 export const setCookie = (name: string, value: string) => {
-  document.cookie = `${name}=${value}`;
+  document.cookie = `${name}=${value};path=/`;
 };
 
 export const removeCookie = (name: string) => {

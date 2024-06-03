@@ -12,7 +12,7 @@ export default function FeedbackDetailPage({
 
   return (
     <>
-      <main className="flex animate-in max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
+      <main className="flex max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
         <FeedbackDetail id={id} />
         <div className="min-w-[251px] bg-blue-500">
           <AdBanner

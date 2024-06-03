@@ -13,6 +13,7 @@ import {
 } from 'react';
 import { Blocks } from '../data/Blocks';
 import { any, key } from '../utils';
+import { uploadImage } from '@/utils/uploadImage';
 
 interface UndoData {
   str: string;
@@ -411,20 +412,60 @@ const MoonerDownEditor = ({ texts, setTexts, renders, placeholder }: Props) => {
     blockFocus(event.currentTarget);
   };
 
-  const onPaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
+  const onPaste = async (event: ClipboardEvent<HTMLTextAreaElement>) => {
+    console.log('observe paste!');
     if (event.currentTarget.selectionStart != event.currentTarget.selectionEnd)
       return;
     const data = event.clipboardData.getData('text/plain');
-    if (
-      Regex.url.test(data) &&
-      event.currentTarget.value.substring(
-        event.currentTarget.selectionStart - 1,
-        event.currentTarget.selectionEnd + 1
-      ) !== '()'
-    ) {
-      event.preventDefault();
-      autoComplete(`[$](${data})`);
-      registerUndo();
+    const item = (event.clipboardData || event.nativeEvent.clipboardData)
+      .items[0];
+
+    item.getAsString((str) => console.log('item value : ' + str));
+
+    if (item.kind === 'file') {
+      console.log('this is file!');
+      const file = item.getAsFile();
+      if (file) {
+        try {
+          console.log('file try...');
+          // autoComplete(`![$](이미지 업로드중...)`);
+          const publicURL = await uploadImage(file);
+          console.log('Image uploaded successfully:', publicURL);
+          // registerUndo();
+          event.preventDefault();
+          autoComplete(`![$](${publicURL})`);
+          registerUndo();
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
+      }
+    } else if (item.type === 'text/html') {
+      console.log('this is text/html1');
+      item.getAsString(async (html) => {
+        const match = html.match(/<img[^>]+src="([^">]+)"/);
+        const imageURL = match ? match[1].replaceAll('amp;', '') : null;
+        if (imageURL) {
+          try {
+            event.preventDefault();
+            autoComplete(`![$](${imageURL})`);
+            registerUndo();
+          } catch (error) {
+            console.error('Error uploading image:', error);
+          }
+        }
+      });
+    } else if (item.kind === 'string') {
+      if (
+        Regex.url.test(data) &&
+        event.currentTarget.value.substring(
+          event.currentTarget.selectionStart - 1,
+          event.currentTarget.selectionEnd + 1
+        ) !== '()'
+      ) {
+        event.preventDefault();
+        autoComplete(`[$](${data})`);
+        registerUndo();
+      }
     }
   };
 
@@ -451,10 +492,6 @@ const MoonerDownEditor = ({ texts, setTexts, renders, placeholder }: Props) => {
       const firstElement =
         document.getElementById(key('block', 0))?.offsetTop ?? 0;
       if (element) {
-        // console.log(
-        // 	`${index}, ${firstElement}, ${element.offsetTop}, ${element.offsetHeight}, ${firstElement - element.offsetTop}, ${renders.current.offsetHeight / 2}`
-        // )
-        // console.log(element.innerHTML)
         renders.current?.scrollTo({
           left: 0,
           top:

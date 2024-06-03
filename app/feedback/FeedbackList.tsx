@@ -161,11 +161,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
                   </div>
                   {value.image && (
                     <Image
-                      src={
-                        process.env.NEXT_PUBLIC_IMAGE_URL +
-                        value.image +
-                        '.webp'
-                      }
+                      src={value.image}
                       alt={`${value.title} thumbnail`}
                       width={480}
                       height={270}

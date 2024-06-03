@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MoonerDownEditor from '@/utils/editor/components/MoonerDownEditor';
 import { Blocks } from '@/utils/editor/data/Blocks';
 
@@ -16,6 +16,8 @@ const useMoonerDown = (text?: string) => {
       placeholder={placeholder}
     />
   );
+
+  useEffect(() => setTexts(text || ''), [text]);
 
   return {
     texts,

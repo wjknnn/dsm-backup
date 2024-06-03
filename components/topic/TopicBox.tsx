@@ -22,7 +22,7 @@ export const TopicBox = () => {
         >
           <div className="flex justify-center w-full border bg-gradient-to-t from-white dark:from-grayDark3 dark:to-grayDark2 rounded-2xl border-grayLight2 dark:border-grayDark2">
             <Image
-              src={process.env.NEXT_PUBLIC_IMAGE_URL + value.image + '.webp'}
+              src={value.image}
               alt={`${value.title} thumbnail`}
               width={400}
               height={300}

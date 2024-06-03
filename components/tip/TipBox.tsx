@@ -23,9 +23,7 @@ export const TipBox = async () => {
         <Link href={`/tip/${value.id}`} key={value.id}>
           <article className="flex flex-col object-cover w-full gap-3 [&>.thumbnail]:hover:-translate-y-2">
             <Image
-              src={
-                process.env.NEXT_PUBLIC_IMAGE_URL! + value.thumbnail + '.webp'
-              }
+              src={value.thumbnail!}
               alt={value.title + ' thumbnail image'}
               width={384}
               height={216}
