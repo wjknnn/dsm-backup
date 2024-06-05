@@ -1,14 +1,17 @@
 'use client';
 
-import { getFeedback } from '@/apis';
+import { deleteFeedback, getFeedback } from '@/apis';
 import { Chat, More, Pen, Share } from '@/assets';
 import { FeedbackChip, MoreSelect, useSelect } from '@/components';
 import { getCookie, relativeTime } from '@/utils';
+import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export const FeedbackDetail = ({ id }: { id: string }) => {
+  const router = useRouter();
   const { data, isLoading, error } = useQuery({
     queryKey: ['Feedback Detail', id],
     queryFn: () => getFeedback(id),
@@ -18,7 +21,12 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   const { modal, toggleModal } = useSelect<'share' | 'more'>();
   const userId = getCookie('userId');
 
-  const deleteFeedback = () => {};
+  const deleteFeedbackHandler = async () => {
+    const token = getToken() || '';
+    await deleteFeedback(id, token)
+      .then(() => router.replace('/feedback'))
+      .catch((err) => alert(err));
+  };
 
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-10">
@@ -91,7 +99,7 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                             : '글 신고',
                         onClick: () =>
                           userId === data.writer
-                            ? deleteFeedback()
+                            ? deleteFeedbackHandler()
                             : toggleModal('more'),
                       },
                     ]}

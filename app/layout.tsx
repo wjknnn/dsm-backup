@@ -36,6 +36,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        <Script
+          async
+          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+        />
       </head>
       <body>
         <QueryProvider>

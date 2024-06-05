@@ -30,12 +30,12 @@ export const MoreSelect = ({
   return (
     <div
       onClick={click}
-      className="absolute border border-grayLight1 right-0 min-w-20 w-fit flex flex-col animate-in bg-white p-1 rounded-xl shadow-[0_8px_24px_0_rgba(0,0,0,0.12)]"
+      className="absolute border border-grayLight1 dark:border-grayDark2 right-0 min-w-20 w-fit flex flex-col animate-in bg-white dark:bg-grayDark3 p-1 rounded-xl shadow-[0_8px_24px_0_rgba(0,0,0,0.12)]"
     >
       {list.map(({ icon, name, ...props }, index) => (
         <button
           key={index}
-          className="flex px-3 py-2 rounded-lg hover:bg-grayLight2"
+          className="flex px-3 py-2 rounded-lg hover:bg-grayLight2 dark:hover:bg-grayDark2"
           {...props}
         >
           <p className="text-nowrap text-start">{name}</p>
