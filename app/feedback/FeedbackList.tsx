@@ -3,8 +3,9 @@
 import { getFeedbackList } from '@/apis';
 import { ImageIcon, List, Post } from '@/assets';
 import { FeedbackChip, FeedbackSkeleton } from '@/components';
+import { feedbackPageStore } from '@/store';
 import { FeedbackOrderType } from '@/types';
-import { relativeTime } from '@/utils/timeUtils';
+import { relativeTime } from '@/utils';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,7 +14,7 @@ import { useEffect, useState } from 'react';
 export const FeedbackList = ({ max }: { max: number }) => {
   const [order, setOrder] = useState<FeedbackOrderType>('latest');
   const [isList, setIsList] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
+  const { page, updatePage } = feedbackPageStore();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['Feedback List', page, order, isList],
@@ -41,7 +42,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
   const handleIsList = (value: boolean) => {
     if (isList !== value) {
       setIsList(value);
-      setPage((prev) => (value ? Math.ceil(prev / 2) : prev * 2 - 1));
+      updatePage(value ? Math.ceil(page / 2) : page * 2 - 1);
       if (typeof window !== 'object') return;
       localStorage.setItem('isList', `${value}`);
     }
@@ -185,7 +186,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
         {[...new Array(isList ? Math.ceil(max / 2) : max)].map((_, i) => (
           <button
             key={i}
-            onClick={() => setPage(i + 1)}
+            onClick={() => updatePage(i + 1)}
             className={`flex items-center justify-center size-10 rounded-xl ${
               page === i + 1 ? 'bg-grayDark3 dark:bg-grayLight2' : ''
             }`}

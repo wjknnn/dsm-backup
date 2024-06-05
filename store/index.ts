@@ -1,0 +1,1 @@
+export { feedbackPageStore } from './feedbackPage';

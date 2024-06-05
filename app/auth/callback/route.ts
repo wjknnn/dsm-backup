@@ -32,5 +32,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${requestUrl.origin}/protected`);
+  return NextResponse.redirect(`${requestUrl.origin}/`);
 }

@@ -2,8 +2,8 @@
 
 import { getFeedback } from '@/apis';
 import { Chat, More, Pen, Share } from '@/assets';
-import { FeedbackChip } from '@/components';
-import { relativeTime } from '@/utils';
+import { FeedbackChip, MoreSelect, useSelect } from '@/components';
+import { getCookie, relativeTime } from '@/utils';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -15,6 +15,10 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   });
 
   const { Result } = useMoonerDown(data?.content);
+  const { modal, toggleModal } = useSelect<'share' | 'more'>();
+  const userId = getCookie('userId');
+
+  const deleteFeedback = () => {};
 
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-10">
@@ -70,9 +74,31 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
               <button className="p-3 rounded-full hover:bg-grayLight2 dark:hover:bg-grayDark2 text-grayDark1 dark:text-grayBase">
                 <Share />
               </button>
-              <button className="p-3 rounded-full hover:bg-grayLight2 dark:hover:bg-grayDark2 text-grayDark1 dark:text-grayBase">
-                <More />
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => toggleModal('more')}
+                  className="p-3 rounded-full hover:bg-grayLight2 dark:hover:bg-grayDark2 text-grayDark1 dark:text-grayBase"
+                >
+                  <More />
+                </button>
+                {modal.has('more') && (
+                  <MoreSelect
+                    list={[
+                      {
+                        name:
+                          userId === data.writer
+                            ? '피드백 요청글 삭제'
+                            : '글 신고',
+                        onClick: () =>
+                          userId === data.writer
+                            ? deleteFeedback()
+                            : toggleModal('more'),
+                      },
+                    ]}
+                    click={() => toggleModal('more')}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </>
