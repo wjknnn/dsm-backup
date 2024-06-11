@@ -12,6 +12,7 @@ export type FeedbackType = {
   feedback: number;
   created_at: string;
   users: { name: string; profile_image: string };
+  views: number;
 };
 
 export type FeedbackListType = FeedbackType[];

@@ -5,3 +5,4 @@ export { getFeedback } from './feedback/getFeedback';
 export { getFeedbackList } from './feedback/getFeedbackList';
 export { uploadFeedback } from './feedback/uploadFeedback';
 export { deleteFeedback } from './feedback/deleteFeedback';
+export { getPopularFeedback } from './feedback/getPopularFeedback';
