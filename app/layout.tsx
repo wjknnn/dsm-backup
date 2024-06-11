@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { Footer, Navigator } from '@/components';
-import { QueryProvider, ThemesProvider } from '@/utils';
+import { OneSignalProvider, QueryProvider, ThemesProvider } from '@/utils';
 import Script from 'next/script';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -44,10 +44,12 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <ThemesProvider>
-            <main className="min-h-[100dvh] flex flex-col items-center">
-              <Navigator />
-              {children}
-            </main>
+            <OneSignalProvider>
+              <main className="min-h-[100dvh] flex flex-col items-center">
+                <Navigator />
+                {children}
+              </main>
+            </OneSignalProvider>
             <Footer />
           </ThemesProvider>
         </QueryProvider>

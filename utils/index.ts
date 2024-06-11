@@ -4,3 +4,4 @@ export { QueryProvider } from './providers/QueryProvider';
 export { relativeTime } from './timeUtils';
 export { convertToWebp } from './convertToWebp';
 export { uploadImage } from './uploadImage';
+export { OneSignalProvider } from './providers/OneSignalProvider';
