@@ -1,7 +1,7 @@
 import { Q } from '@/assets';
 import Link from 'next/link';
 import { FeedbackDetail } from './FeedbackDetail';
-import { AdBanner } from '@/components/ad/AdBanner';
+import { FeedbackSide } from './(SideBar)/FeedbackSide';
 
 export default function FeedbackDetailPage({
   params,
@@ -12,15 +12,9 @@ export default function FeedbackDetailPage({
 
   return (
     <>
-      <main className="flex max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
+      <main className="flex sm:flex-col md:flex-col max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
         <FeedbackDetail id={id} />
-        <div className="min-w-[251px] bg-blue-500">
-          <AdBanner
-            dataAdFormat="fluid"
-            dataAdLayoutKey="-75+eu-h-24+5o"
-            dataAdSlot="8058470646"
-          />
-        </div>
+        <FeedbackSide />
       </main>
       <Link
         href="/feedback/write"

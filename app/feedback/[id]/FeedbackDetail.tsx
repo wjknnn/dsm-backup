@@ -15,6 +15,7 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['Feedback Detail', id],
     queryFn: () => getFeedback(id),
+    staleTime: 60 * 1000 * 10,
   });
 
   const { Result } = useMoonerDown(data?.content);
@@ -44,10 +45,19 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                 className="object-cover bg-white border rounded-full cursor-pointer size-10 dark:bg-grayDark3 border-grayLight2 dark:border-grayDark2"
                 priority
               />
-              <p className="text-bodyLarge text-grayDark2 dark:text-grayLight1">
-                {data.users.name} ∙{' '}
-                {data.created_at && relativeTime(data.created_at)}
-              </p>
+              <div className="flex items-center gap-2 text-bodyLarge">
+                <p className="text-grayDark2 dark:text-grayLight1">
+                  {data.users.name}
+                </p>
+                <div className="rounded-sm size-1 bg-grayLight1"></div>
+                <p className="text-grayDark1 dark:text-grayBase">
+                  조회수 {data.views}
+                </p>
+                <div className="rounded-sm size-1 bg-grayLight1"></div>
+                <p className="text-grayDark1 dark:text-grayBase">
+                  {data.created_at && relativeTime(data.created_at)}
+                </p>
+              </div>
             </div>
           </div>
           <article className="pb-6">
