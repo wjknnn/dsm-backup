@@ -49,11 +49,11 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                 <p className="text-grayDark2 dark:text-grayLight1">
                   {data.users.name}
                 </p>
-                <div className="rounded-sm size-1 bg-grayLight1"></div>
+                <div className="rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15"></div>
                 <p className="text-grayDark1 dark:text-grayBase">
                   조회수 {data.views}
                 </p>
-                <div className="rounded-sm size-1 bg-grayLight1"></div>
+                <div className="rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15"></div>
                 <p className="text-grayDark1 dark:text-grayBase">
                   {data.created_at && relativeTime(data.created_at)}
                 </p>

@@ -12,7 +12,7 @@ export default function FeedbackDetailPage({
 
   return (
     <>
-      <main className="flex sm:flex-col md:flex-col max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
+      <main className="flex sm:flex-col md:flex-col md:max-w-[800px] max-w-[1280px] w-full px-10 sm:px-6 py-20 sm:pt-10 gap-20">
         <FeedbackDetail id={id} />
         <FeedbackSide />
       </main>
