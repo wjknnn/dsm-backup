@@ -6,3 +6,5 @@ export { getFeedbackList } from './feedback/getFeedbackList';
 export { uploadFeedback } from './feedback/uploadFeedback';
 export { deleteFeedback } from './feedback/deleteFeedback';
 export { getPopularFeedback } from './feedback/getPopularFeedback';
+export { getFeedbackComment } from './feedback/comment/getFeedbackComment';
+export { getFeedbackAnswer } from './feedback/answer/getFeedbackAnswer';
