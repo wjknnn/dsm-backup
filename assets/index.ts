@@ -18,3 +18,6 @@ export { Chat } from './Chat';
 export { Share } from './Share';
 export { More } from './More';
 export { Close } from './Close';
+export { Heart } from './Heart';
+export { HeartLine } from './HeartLine';
+export { Send } from './Send';
