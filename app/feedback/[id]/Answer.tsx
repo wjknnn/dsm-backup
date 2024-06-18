@@ -72,9 +72,9 @@ export const Answer = ({
           </p>
         </div>
       </div>
-      <p className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
+      <div className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
         {Result}
-      </p>
+      </div>
       <div className="flex justify-between">
         <div className="flex gap-2">
           <button

@@ -73,9 +73,9 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
               </div>
             </div>
             <article className="pb-6">
-              <p className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
+              <div className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
                 {Result}
-              </p>
+              </div>
             </article>
             {data.tags && (
               <div className="flex gap-[6px] pb-6 items-center flex-wrap">
@@ -139,7 +139,7 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
       )}
       {showComment && <FeedbackComment id={id} setCommentCnt={setCommentCnt} />}
       <div className="h-[1px] w-full bg-grayLight2 dark:bg-grayDark2"></div>
-      <FeedbackAnswer id={id} />
+      <FeedbackAnswer id={id} writer={data?.writer || ''} />
     </section>
   );
 };

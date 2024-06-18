@@ -29,10 +29,9 @@ export const PopularFeedback = () => {
         <PopularFeedbackSkeleton />
       ) : (
         data?.slice(page * 4 - 4, page * 4).map((value) => (
-          <>
+          <div key={value.id} className="flex flex-col w-full">
             <Link
               href={`/feedback/${value.id}`}
-              key={value.id}
               className="flex flex-col w-full gap-2 px-6 py-3 hover:bg-grayLight2 dark:hover:bg-grayDark2 hover:bg-opacity-60"
             >
               <div className="flex flex-col gap-1">
@@ -47,7 +46,7 @@ export const PopularFeedback = () => {
               </p>
             </Link>
             <div className="w-[calc(100%-48px)] bg-grayLight2 dark:bg-grayDark2 h-[1px]"></div>
-          </>
+          </div>
         ))
       )}
     </section>

@@ -19,6 +19,7 @@ export const FeedbackComment = ({
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['feedback comment', id],
     queryFn: () => getFeedbackComment(id),
+    staleTime: 1000 * 10,
   });
 
   const userId = getUserId();
@@ -49,6 +50,7 @@ export const FeedbackComment = ({
 
   const commentHandler = async (writer: string, commentId: number) => {
     if (userId === writer) {
+      if (!confirm('댓글을 삭제하실건가요?')) return;
       if (!isSined()) return;
       const { error } = await supabase
         .from('feedback_comment')
@@ -83,7 +85,9 @@ export const FeedbackComment = ({
             onClick={commentRegister}
             disabled={comment.length < 6}
             className={`${
-              comment.length < 6 ? 'text-grayLight1' : 'text-black'
+              comment.length < 6
+                ? 'text-grayLight1 dark:text-grayDark15'
+                : 'text-black dark:text-white'
             }`}
           >
             <Send />
@@ -93,8 +97,8 @@ export const FeedbackComment = ({
       {data && (
         <section className="flex flex-col">
           {data.map((value, index) => (
-            <>
-              <article key={value.id} className="flex flex-col gap-2 py-4">
+            <div key={value.id} className="flex flex-col">
+              <article className="flex flex-col gap-2 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-bodyLarge">
                     <p className="text-grayDark2 dark:text-grayLight1 text-bodyLarge2">
@@ -124,7 +128,7 @@ export const FeedbackComment = ({
               {data.length > index + 1 && (
                 <div className="bg-grayLight2 dark:bg-grayDark2 h-[1px]"></div>
               )}
-            </>
+            </div>
           ))}
         </section>
       )}

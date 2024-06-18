@@ -10,6 +10,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 const Pretendard = localFont({
   src: './PretendardVariable.woff2',
+  display: 'swap',
 });
 
 export const metadata = {

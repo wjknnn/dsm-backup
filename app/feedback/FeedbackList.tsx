@@ -170,6 +170,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
                       width={480}
                       height={270}
                       className="w-[256px] sm:w-full h-fit rounded-xl border-[1.6px] border-grayLight2 dark:border-grayDark15 aspect-video object-cover"
+                      priority
                     />
                   )}
                 </article>

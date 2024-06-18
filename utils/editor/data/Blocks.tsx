@@ -1,7 +1,5 @@
 import { AlignType, BlockType } from './blockInterface';
-import { useAnimation } from 'framer-motion';
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { key, noText } from '../utils';
 import {
   BlockA,
@@ -18,7 +16,7 @@ import {
 import { EditorBlockReplacer } from './EditorBlockReplacer';
 import { atomOneDark, CodeBlock } from 'react-code-blocks';
 import { MoonerText } from '@/utils/editor/MoonerText';
-import { motions } from '@/utils/editor/motions';
+import Image from 'next/image';
 
 export class Blocks {
   static regex: { [p in BlockType]: RegExp } = {
@@ -634,118 +632,16 @@ export class Blocks {
     />
   );
 
-  static Img = ({
-    url,
-    alt,
-    children,
-    align,
-    border,
-    ...props
-  }: {
-    url: string;
-    border?: string;
-    alt?: string;
-    align?: 'center' | 'flex-start' | 'flex-end';
-  } & {
-    [_: string]: any;
-  }) => {
-    const anim = useAnimation();
-    const [show, setShow] = useState<boolean>(false);
-
+  static Img = ({ url, alt }: { url: string; alt?: string }) => {
     return (
-      <>
-        <ImgDiv $align={align}>
-          <Image
-            onClick={() => {
-              setShow(true);
-              anim.start('show');
-            }}
-            alt={alt}
-            className={`cursor-pointer w-[90%] h-[80%] object-contain sm:w-[70%] sm:h-[70%] ${
-              border ? 'rounded-2xl' : ''
-            }`}
-            $border={border}
-            onContextMenu={(v) => v.preventDefault()}
-            onDragStart={(v) => v.preventDefault()}
-            onDrag={(v) => v.preventDefault()}
-            onDragEnd={(v) => v.preventDefault()}
-            onDragStartCapture={(v) => v.preventDefault()}
-            onDragCapture={(v) => v.preventDefault()}
-            onDragEndCapture={(v) => v.preventDefault()}
-            onContextMenuCapture={(v) => v.preventDefault()}
-            onKeyDown={(v) => v.preventDefault()}
-            onKeyDownCapture={(v) => v.preventDefault()}
-            src={url}
-            {...props}
-          >
-            {children}
-          </Image>
-        </ImgDiv>
-        <div
-          className={`${
-            show ? 'flex' : 'hidden'
-          } fixed left-0 top-0 w-full h-[100dvh] z-[1000] transform-none`}
-        >
-          <Background
-            animate={anim}
-            duration={0.5}
-            show={{ opacity: 1 }}
-            hide={{ opacity: 0 }}
-            onClick={() => {
-              anim.start('hide');
-              setTimeout(() => {
-                setShow(false);
-              }, 500);
-            }}
-          >
-            <Image
-              alt={alt}
-              $border={border}
-              onContextMenu={(v) => v.preventDefault()}
-              onDragStart={(v) => v.preventDefault()}
-              onDrag={(v) => v.preventDefault()}
-              onDragEnd={(v) => v.preventDefault()}
-              onDragStartCapture={(v) => v.preventDefault()}
-              onDragCapture={(v) => v.preventDefault()}
-              onDragEndCapture={(v) => v.preventDefault()}
-              onContextMenuCapture={(v) => v.preventDefault()}
-              onKeyDown={(v) => v.preventDefault()}
-              onKeyDownCapture={(v) => v.preventDefault()}
-              src={url}
-              {...props}
-            >
-              {children}
-            </Image>
-          </Background>
-        </div>
-      </>
+      <Image
+        src={url}
+        alt={alt || ''}
+        width={600}
+        height={600}
+        className={`cursor-pointer w-[90%] h-[80%] object-contain sm:w-[80%] sm:h-[70%] rounded-2xl mb-2`}
+        priority
+      />
     );
   };
 }
-
-const ImgDiv = styled.div<{ width?: string; height?: string; $align?: string }>`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  justify-content: ${(props) => props.$align ?? 'flex-start'};
-`;
-
-const Image = styled.img<{ width?: string; height?: string; $border?: string }>`
-  cursor: pointer;
-  width: 90%;
-  height: 80%;
-  border-radius: ${(props) => props.$border ?? '16px'};
-  object-fit: contain;
-  @media (min-width: 768px) {
-    width: 70%;
-    height: 70%;
-  }
-`;
-const Background = styled(motions.keyDiv)`
-  backdrop-filter: blur(6px);
-  height: 100%;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
