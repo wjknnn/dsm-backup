@@ -6,6 +6,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
+import DOMPurify from 'dompurify';
 
 export const FeedbackComment = ({
   id,
@@ -113,7 +114,9 @@ export const FeedbackComment = ({
                 </div>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: value.comment.replaceAll('\n', '<br>'),
+                    __html: DOMPurify.sanitize(
+                      value.comment.replaceAll('\n', '<br>')
+                    ),
                   }}
                   className="text-grayDark3 dark:text-grayLight2 text-bodyLarge"
                 />
