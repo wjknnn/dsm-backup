@@ -12,6 +12,7 @@ export type FeedbackType = {
   feedback: number;
   created_at: string;
   users: { name: string; profile_image: string };
+  feedback_comment: number;
   views: number;
 };
 
