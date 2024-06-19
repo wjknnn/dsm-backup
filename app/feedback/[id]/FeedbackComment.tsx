@@ -11,14 +11,16 @@ import DOMPurify from 'dompurify';
 export const FeedbackComment = ({
   id,
   setCommentCnt,
+  answer = false,
 }: {
   id: string;
   setCommentCnt: Dispatch<SetStateAction<number>>;
+  answer?: boolean;
 }) => {
   const [comment, setComment] = useState<string>('');
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['feedback comment', id],
-    queryFn: () => getFeedbackComment(id),
+    queryKey: ['feedback comment', id, answer],
+    queryFn: () => getFeedbackComment(id, answer),
     staleTime: 1000 * 10,
   });
 
@@ -36,9 +38,11 @@ export const FeedbackComment = ({
 
   const commentRegister = async () => {
     if (!isSined()) return;
+    const feedbackC = { comment: comment, writer: userId, feedback: +id };
+    const answerC = { comment: comment, writer: userId, answer: +id };
     const { error } = await supabase
       .from('feedback_comment')
-      .insert({ comment: comment, feedback: +id, writer: userId });
+      .insert(answer ? answerC : feedbackC);
 
     if (error) console.log(error);
     else {
@@ -94,7 +98,7 @@ export const FeedbackComment = ({
           </button>
         </div>
       </div>
-      {data && (
+      {data && data.length > 0 && (
         <section className="flex flex-col">
           {data.map((value, index) => (
             <div key={value.id} className="flex flex-col">

@@ -6,7 +6,8 @@ import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FeedbackComment } from './FeedbackComment';
 
 export const Answer = ({
   answer,
@@ -16,6 +17,7 @@ export const Answer = ({
   userId: string;
 }) => {
   const [showComment, setShowComment] = useState<boolean>(false);
+  const [commentCnt, setCommentCnt] = useState<number>(0);
   const [heart, setHeart] = useState<string[]>(answer.like);
 
   const router = useRouter();
@@ -50,6 +52,10 @@ export const Answer = ({
 
     if (error) console.log(error);
   };
+
+  useEffect(() => {
+    setCommentCnt(answer.feedback_comment[0].count || 0);
+  }, [answer.id]);
 
   return (
     <article className="flex flex-col gap-7 p-8 rounded-[18px] border border-grayLight1 dark:border-grayDark2">
@@ -106,9 +112,7 @@ export const Answer = ({
             }`}
           >
             <Chat size={20} />
-            {answer.feedback_comment[0].count > 0 && (
-              <p>{answer.feedback_comment[0].count}</p>
-            )}
+            {commentCnt > 0 && <p>{commentCnt}</p>}
           </button>
         </div>
         <div className="relative">
@@ -134,6 +138,13 @@ export const Answer = ({
           )}
         </div>
       </div>
+      {showComment && (
+        <FeedbackComment
+          id={`${answer.id}`}
+          setCommentCnt={setCommentCnt}
+          answer
+        />
+      )}
     </article>
   );
 };

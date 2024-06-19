@@ -17,6 +17,7 @@ import { EditorBlockReplacer } from './EditorBlockReplacer';
 import { atomOneDark, CodeBlock } from 'react-code-blocks';
 import { MoonerText } from '@/utils/editor/MoonerText';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export class Blocks {
   static regex: { [p in BlockType]: RegExp } = {
@@ -634,14 +635,20 @@ export class Blocks {
 
   static Img = ({ url, alt }: { url: string; alt?: string }) => {
     return (
-      <Image
-        src={url}
-        alt={alt || ''}
-        width={600}
-        height={600}
-        className={`cursor-pointer w-[90%] h-[80%] object-contain sm:w-[80%] sm:h-[70%] rounded-2xl mb-2`}
-        priority
-      />
+      <Link
+        href={url}
+        target="_blank"
+        className="cursor-pointer mb-2 w-[90%] h-[80%] sm:w-[80%] sm:h-[70%]"
+      >
+        <Image
+          src={url}
+          alt={alt || ''}
+          width={600}
+          height={600}
+          className={`object-contain rounded-2xl w-full h-full`}
+          priority
+        />
+      </Link>
     );
   };
 }
