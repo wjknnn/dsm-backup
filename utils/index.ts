@@ -5,3 +5,4 @@ export { relativeTime } from './timeUtils';
 export { convertToWebp } from './convertToWebp';
 export { uploadImage } from './uploadImage';
 export { OneSignalProvider } from './providers/OneSignalProvider';
+export { isSined } from './isSined';

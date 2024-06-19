@@ -17,6 +17,8 @@ const useMoonerDown = (text?: string) => {
     />
   );
 
+  const clear = () => setTexts('');
+
   useEffect(() => setTexts(text || ''), [text]);
 
   return {
@@ -30,6 +32,7 @@ const useMoonerDown = (text?: string) => {
         {Blocks.compile(texts)}
       </div>
     ),
+    clear,
   };
 };
 

@@ -12,9 +12,11 @@ import { FeedbackComment } from './FeedbackComment';
 export const Answer = ({
   answer,
   userId,
+  refetch,
 }: {
   answer: FeedbackAnswerType;
   userId: string;
+  refetch: any;
 }) => {
   const [showComment, setShowComment] = useState<boolean>(false);
   const [commentCnt, setCommentCnt] = useState<number>(0);
@@ -51,6 +53,7 @@ export const Answer = ({
       .eq('id', answer.id);
 
     if (error) console.log(error);
+    else refetch();
   };
 
   useEffect(() => {
@@ -78,6 +81,11 @@ export const Answer = ({
           </p>
         </div>
       </div>
+      {userId === answer.writer && (
+        <div className="w-fit p-[2px_8px] text-bodyStrong rounded-lg bg-attentionBackground text-attention dark:bg-attention dark:bg-opacity-20">
+          <p className="dark:brightness-150 text-nowrap">내가 남긴 피드백</p>
+        </div>
+      )}
       <div className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
         {Result}
       </div>

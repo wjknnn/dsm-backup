@@ -1,10 +1,9 @@
 import { getFeedbackComment } from '@/apis';
 import { Send } from '@/assets';
-import { relativeTime } from '@/utils';
+import { isSined, relativeTime } from '@/utils';
 import { getUserId } from '@/utils/cookie/client';
 import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
 import DOMPurify from 'dompurify';
 
@@ -25,19 +24,10 @@ export const FeedbackComment = ({
   });
 
   const userId = getUserId();
-  const router = useRouter();
   const supabase = createClient();
 
-  const isSined = () => {
-    if (!userId && !alert('로그인 후 댓글을 작성해 보세요.')!) {
-      router.push('/login');
-      return false;
-    }
-    return true;
-  };
-
   const commentRegister = async () => {
-    if (!isSined()) return;
+    if (!isSined('로그인 후 댓글을 작성해 보세요.')) return;
     const feedbackC = { comment: comment, writer: userId, feedback: +id };
     const answerC = { comment: comment, writer: userId, answer: +id };
     const { error } = await supabase
@@ -55,7 +45,7 @@ export const FeedbackComment = ({
   const commentHandler = async (writer: string, commentId: number) => {
     if (userId === writer) {
       if (!confirm('댓글을 삭제하실건가요?')) return;
-      if (!isSined()) return;
+      if (!isSined('로그인 후 댓글을 삭제해 보세요.')) return;
       const { error } = await supabase
         .from('feedback_comment')
         .delete()
@@ -74,7 +64,7 @@ export const FeedbackComment = ({
       <div className="flex flex-col gap-2 p-6 rounded-[18px] border border-grayLight1 dark:border-grayDark15">
         <textarea
           value={comment}
-          onClick={isSined}
+          onClick={() => isSined('로그인 후 댓글을 작성해 보세요.')}
           onChange={(e) => setComment(e.currentTarget.value)}
           className="resize-none min-h-[120px] h-fit focus:outline-none bg-transparent"
           placeholder="게시글에 관련된 자신의 의견을 작성해 보세요.."
