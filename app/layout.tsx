@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { Footer, Navigator } from '@/components';
 import { OneSignalProvider, QueryProvider, ThemesProvider } from '@/utils';
@@ -55,6 +56,7 @@ export default function RootLayout({
           </ThemesProvider>
         </QueryProvider>
       </body>
+      <GoogleAnalytics gaId="G-JGDSQQ387S" />
     </html>
   );
 }

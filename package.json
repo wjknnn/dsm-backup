@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.4",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "@tanstack/react-query": "^5.32.1",
