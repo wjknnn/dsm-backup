@@ -21,3 +21,4 @@ export { Close } from './Close';
 export { Heart } from './Heart';
 export { HeartLine } from './HeartLine';
 export { Send } from './Send';
+export { Star } from './Star';
