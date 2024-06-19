@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ThemeButton } from './ThemeButton';
 import Image from 'next/image';
+import { UserType } from '@/types';
 
 const List = ({
   children,
@@ -22,12 +23,10 @@ const List = ({
 );
 
 export const ProfileModal = ({
-  email,
-  name,
+  user,
   logOut,
 }: {
-  email?: string;
-  name?: string;
+  user: UserType;
   logOut?: () => Promise<never>;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -36,10 +35,10 @@ export const ProfileModal = ({
     <>
       <div
         onClick={() => setOpen(true)}
-        className="w-[40px] h-[40px] rounded-full bg-grayLight2 border border-grayBase dark:bg-grayDark2 dark:border-grayDark15 overflow-hidden"
+        className="w-[40px] h-[40px] rounded-full bg-grayLight2 border border-grayLight1 dark:bg-grayDark2 dark:border-grayDark2 overflow-hidden cursor-pointer"
       >
         <Image
-          src={'/images/DefaultProfile.png'}
+          src={user.profile_image || '/images/DefaultProfile.png'}
           alt="profile image"
           width={40}
           height={40}
@@ -57,9 +56,9 @@ export const ProfileModal = ({
             className="absolute animate-in bg-white dark:bg-grayDark3 top-[64px] sm:right-[24px] right-[40px] lg:right-[calc((100%-1200px)/2)] w-[280px] rounded-[16px] border border-grayLight1 dark:border-grayDark2 p-[8px] gap-[2px] flex flex-col shadow-[0_8px_24px_0_rgba(0,0,0,0.12)] items-stretch z-[120]"
           >
             <List link="/users">
-              <div className="size-[36px] rounded-full bg-grayLight2 dark:bg-grayDark2 border border-grayBase dark:border-grayDark15 overflow-hidden">
+              <div className="size-[36px] rounded-full bg-grayLight2 dark:bg-grayDark2 border border-grayLight1 dark:border-grayDark2 overflow-hidden">
                 <Image
-                  src={'/images/DefaultProfile.png'}
+                  src={user.profile_image || '/images/DefaultProfile.png'}
                   alt="profile image"
                   width={40}
                   height={40}
@@ -67,9 +66,9 @@ export const ProfileModal = ({
                 />
               </div>
               <div className="flex flex-col gap-[2px] flex-1">
-                <p className="text-bodyLarge">{name || 'Unknown User'}</p>
+                <p className="text-bodyLarge">{user.name}</p>
                 <p className="text-body text-grayDark1">
-                  {email || '이메일이 없네요'}
+                  {user.school_grade}학년
                 </p>
               </div>
               <Arrow className="rotate-180 text-grayDark1" size={18} />

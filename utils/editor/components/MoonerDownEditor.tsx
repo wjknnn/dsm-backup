@@ -519,6 +519,7 @@ const MoonerDownEditor = ({ texts, setTexts, renders, placeholder }: Props) => {
       onPaste={onPaste}
       onInput={onInput}
       onKeyDown={onKeyDown}
+      maxLength={5000}
       placeholder={placeholder}
     />
   );

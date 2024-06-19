@@ -1,4 +1,4 @@
-import { Chat, Heart, HeartLine, More } from '@/assets';
+import { Chat, Heart, HeartLine, More, Star } from '@/assets';
 import { MoreSelect, useSelect } from '@/components';
 import { FeedbackAnswerType } from '@/types';
 import { relativeTime } from '@/utils';
@@ -13,10 +13,12 @@ export const Answer = ({
   answer,
   userId,
   refetch,
+  writer,
 }: {
   answer: FeedbackAnswerType;
   userId: string;
   refetch: any;
+  writer: string;
 }) => {
   const [showComment, setShowComment] = useState<boolean>(false);
   const [commentCnt, setCommentCnt] = useState<number>(0);
@@ -47,9 +49,21 @@ export const Answer = ({
   };
 
   const deleteAnswerHandler = async () => {
+    if (!confirm('답변을 삭제하시면 복구할 수 없어요. 그래도 삭제하실 건가요?'))
+      return;
     const { error } = await supabase
       .from('feedback_answer')
       .delete()
+      .eq('id', answer.id);
+
+    if (error) console.log(error);
+    else refetch();
+  };
+
+  const answerPick = async () => {
+    const { error } = await supabase
+      .from('feedback_answer')
+      .update({ pick: true })
       .eq('id', answer.id);
 
     if (error) console.log(error);
@@ -62,30 +76,42 @@ export const Answer = ({
 
   return (
     <article className="flex flex-col gap-7 p-8 rounded-[18px] border border-grayLight1 dark:border-grayDark2">
-      <div className="flex items-center gap-3">
-        <Image
-          src={answer.users.profile_image || '/images/DefaultProfile.png'}
-          alt="profile image"
-          width={80}
-          height={80}
-          className="object-cover bg-white border rounded-full cursor-pointer size-10 dark:bg-grayDark3 border-grayLight2 dark:border-grayDark2"
-          priority
-        />
-        <div className="flex items-center gap-2 text-bodyLarge">
-          <p className="text-grayDark2 dark:text-grayLight1">
-            {answer.users.name}
-          </p>
-          <div className="rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15"></div>
-          <p className="text-grayDark1 dark:text-grayBase">
-            {answer.created_at && relativeTime(answer.created_at)}
-          </p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image
+            src={answer.users.profile_image || '/images/DefaultProfile.png'}
+            alt="profile image"
+            width={80}
+            height={80}
+            className="object-cover bg-white border rounded-full cursor-pointer size-10 dark:bg-grayDark3 border-grayLight2 dark:border-grayDark2"
+            priority
+          />
+          <div className="flex items-center gap-2 text-bodyLarge">
+            <p className="text-grayDark2 dark:text-grayLight1">
+              {answer.users.name}
+            </p>
+            <div className="rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15"></div>
+            <p className="text-grayDark1 dark:text-grayBase">
+              {answer.created_at && relativeTime(answer.created_at)}
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {userId === answer.writer && (
+            <div className="w-fit p-[6px_8px] text-bodyStrong rounded-lg bg-attentionBackground text-attention dark:bg-attention dark:bg-opacity-20">
+              <p className="dark:brightness-150 text-nowrap">
+                내가 남긴 피드백
+              </p>
+            </div>
+          )}
+          {answer.pick && (
+            <div className="flex items-center gap-1 w-fit p-[6px_8px] text-bodyStrong rounded-lg bg-successBackground text-success dark:bg-success dark:bg-opacity-20">
+              <p className="dark:brightness-150 text-nowrap">채택된 답변</p>
+              <Star size={20} />
+            </div>
+          )}
         </div>
       </div>
-      {userId === answer.writer && (
-        <div className="w-fit p-[2px_8px] text-bodyStrong rounded-lg bg-attentionBackground text-attention dark:bg-attention dark:bg-opacity-20">
-          <p className="dark:brightness-150 text-nowrap">내가 남긴 피드백</p>
-        </div>
-      )}
       <div className="text-bodyLarge text-grayDark3 dark:text-grayLight2 m-[-12px]">
         {Result}
       </div>
@@ -123,27 +149,38 @@ export const Answer = ({
             {commentCnt > 0 && <p>{commentCnt}</p>}
           </button>
         </div>
-        <div className="relative">
-          <button
-            onClick={() => toggleModal('more')}
-            className="p-3 rounded-full hover:bg-grayLight2 dark:hover:bg-grayDark2 text-grayDark1 dark:text-grayBase"
-          >
-            <More />
-          </button>
-          {modal.has('more') && (
-            <MoreSelect
-              list={[
-                {
-                  name: userId === answer.writer ? '답변 삭제' : '답변 신고',
-                  onClick: () =>
-                    userId === answer.writer
-                      ? deleteAnswerHandler()
-                      : toggleModal('more'),
-                },
-              ]}
-              click={() => toggleModal('more')}
-            />
+        <div className="flex items-center gap-2">
+          {userId === writer && !answer.pick && (
+            <button
+              onClick={answerPick}
+              className="flex gap-2 items-center p-[11px_24px] h-12 rounded-full border text-bodyLarge hover:bg-attentionBackground dark:hover:bg-grayDark2 text-attention dark:text-white border-grayLight1 dark:border-grayDark15"
+            >
+              <Star size={20} />
+              <p className="text-nowrap">채택하기</p>
+            </button>
           )}
+          <div className="relative">
+            <button
+              onClick={() => toggleModal('more')}
+              className="p-3 rounded-full hover:bg-grayLight2 dark:hover:bg-grayDark2 text-grayDark1 dark:text-grayBase"
+            >
+              <More />
+            </button>
+            {modal.has('more') && (
+              <MoreSelect
+                list={[
+                  {
+                    name: userId === answer.writer ? '답변 삭제' : '답변 신고',
+                    onClick: () =>
+                      userId === answer.writer
+                        ? deleteAnswerHandler()
+                        : toggleModal('more'),
+                  },
+                ]}
+                click={() => toggleModal('more')}
+              />
+            )}
+          </div>
         </div>
       </div>
       {showComment && (

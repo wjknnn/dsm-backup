@@ -39,9 +39,10 @@ export const FeedbackAnswer = ({
   const registerAnswer = async () => {
     if (
       texts.trim().replaceAll('\n', '').replaceAll(' ', '').length < 10 &&
-      alert('10자 이상 입력해 주세요.')!
+      !alert('10자 이상 입력해 주세요.')!
     )
       return;
+
     const supabase = createClient();
     const { error } = await supabase
       .from('feedback_answer')
@@ -128,6 +129,7 @@ export const FeedbackAnswer = ({
                   key={answer.id}
                   answer={answer}
                   userId={userId}
+                  writer={writer}
                   refetch={refetch}
                 />
               ))}

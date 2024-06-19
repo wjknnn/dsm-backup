@@ -13,6 +13,12 @@ export async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const { data: userData } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user?.id)
+    .single();
+
   const signOut = async () => {
     'use server';
 
@@ -26,11 +32,7 @@ export async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4 text-black dark:text-white">
-      <ProfileModal
-        logOut={signOut}
-        email={user.email}
-        name={user.user_metadata.name}
-      />
+      <ProfileModal logOut={signOut} user={userData} />
     </div>
   ) : (
     <Link

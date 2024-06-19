@@ -10,3 +10,4 @@ export {
   type FeedbackCommentType,
   type FeedbackCommentListType,
 } from './feedbackCommentType';
+export { type UserType } from './userType';
