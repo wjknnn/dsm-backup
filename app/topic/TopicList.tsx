@@ -56,7 +56,7 @@ export const TopicList = ({ max }: { max: number }) => {
                     <div className="flex items-center gap-1 text-grayDark15">
                       <Vote size={16} />
                       <p className="text-body2">
-                        투표수 {topic.numA + topic.numB}회
+                        투표수 {topic.num_a + topic.num_b}회
                       </p>
                     </div>
                   </div>

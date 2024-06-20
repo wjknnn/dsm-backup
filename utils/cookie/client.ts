@@ -9,7 +9,7 @@ export const getUserId = async () => {
   if (userId !== data?.identities[0].user_id) {
     setCookie('userId', data?.identities[0].user_id || '');
   }
-  return data?.identities[0].user_id;
+  return data?.identities[0].user_id || '';
 };
 
 export const getToken = () => {

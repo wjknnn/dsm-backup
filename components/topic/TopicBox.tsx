@@ -37,7 +37,7 @@ export const TopicBox = () => {
             <div className="flex gap-1">
               <Vote size={20} className="text-grayDark1" />
               <p className="text-bodyStrong text-grayDark1">
-                투표수 {value.numA + value.numB}회
+                투표수 {value.num_a + value.num_b}회
               </p>
             </div>
           </div>
