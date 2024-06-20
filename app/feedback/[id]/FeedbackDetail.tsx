@@ -3,7 +3,7 @@
 import { deleteFeedback, getFeedback } from '@/apis';
 import { Chat, More, Share } from '@/assets';
 import { FeedbackChip, MoreSelect, useSelect } from '@/components';
-import { getCookie, relativeTime } from '@/utils';
+import { relativeTime } from '@/utils';
 import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
@@ -12,8 +12,15 @@ import { useRouter } from 'next/navigation';
 import { FeedbackAnswer } from './FeedbackAnswer';
 import { useEffect, useState } from 'react';
 import { FeedbackComment } from './FeedbackComment';
+import { userIdStore } from '@/store/userId';
 
-export const FeedbackDetail = ({ id }: { id: string }) => {
+export const FeedbackDetail = ({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) => {
   const [showComment, setShowComment] = useState<boolean>(false);
   const [commentCnt, setCommentCnt] = useState<number>(0);
   const router = useRouter();
@@ -23,9 +30,9 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
     staleTime: 60 * 1000 * 10,
   });
 
+  const { updateUserId } = userIdStore();
   const { Result } = useMoonerDown(data?.content);
   const { modal, toggleModal } = useSelect<'share' | 'more'>();
-  const userId = getCookie('userId');
 
   const deleteFeedbackHandler = async () => {
     const token = getToken() || '';
@@ -37,6 +44,10 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   useEffect(() => {
     setCommentCnt(data?.feedback_comment || 0);
   }, [id, data]);
+
+  useEffect(() => {
+    updateUserId(userId);
+  }, []);
 
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-10">

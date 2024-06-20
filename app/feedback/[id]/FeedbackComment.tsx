@@ -1,11 +1,11 @@
 import { getFeedbackComment } from '@/apis';
 import { Send } from '@/assets';
 import { isSined, relativeTime } from '@/utils';
-import { getUserId } from '@/utils/cookie/client';
 import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useState } from 'react';
 import DOMPurify from 'dompurify';
+import { userIdStore } from '@/store/userId';
 
 export const FeedbackComment = ({
   id,
@@ -23,7 +23,7 @@ export const FeedbackComment = ({
     staleTime: 1000 * 10,
   });
 
-  const userId = getUserId();
+  const { userId } = userIdStore();
   const supabase = createClient();
 
   const commentRegister = async () => {
@@ -43,7 +43,7 @@ export const FeedbackComment = ({
   };
 
   const commentHandler = async (writer: string, commentId: number) => {
-    if (userId === writer) {
+    if ((await userId) === writer) {
       if (!confirm('댓글을 삭제하실건가요?')) return;
       if (!isSined('로그인 후 댓글을 삭제해 보세요.')) return;
       const { error } = await supabase
