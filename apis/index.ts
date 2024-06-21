@@ -8,3 +8,4 @@ export { deleteFeedback } from './feedback/deleteFeedback';
 export { getPopularFeedback } from './feedback/getPopularFeedback';
 export { getFeedbackComment } from './feedback/comment/getFeedbackComment';
 export { getFeedbackAnswer } from './feedback/answer/getFeedbackAnswer';
+export { getTopic } from './topic/getTopic';

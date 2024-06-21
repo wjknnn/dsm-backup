@@ -11,3 +11,4 @@ export {
   type FeedbackCommentListType,
 } from './feedbackCommentType';
 export { type UserType } from './userType';
+export { type TopicType, type TopicCommentType } from './topicType';
