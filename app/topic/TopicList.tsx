@@ -2,7 +2,7 @@
 
 import { getTopicList } from '@/apis';
 import { Vote } from '@/assets';
-import { topicPageStore } from '@/store/topicPage';
+import { topicPageStore } from '@/store';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -53,7 +53,7 @@ export const TopicList = ({ max }: { max: number }) => {
                   </div>
                   <div className="flex flex-col flex-1 gap-2 px-1">
                     <p className="flex-1 text-bodyLarge2">{topic.title}</p>
-                    <div className="flex items-center gap-1 text-grayDark15">
+                    <div className="flex items-center gap-1 text-grayDark15 dark:text-grayBase">
                       <Vote size={16} />
                       <p className="text-body2">
                         투표수 {topic.num_a + topic.num_b}회

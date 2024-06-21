@@ -3,7 +3,7 @@
 import { deleteFeedback, getFeedback } from '@/apis';
 import { Chat, More, Share } from '@/assets';
 import { FeedbackChip, MoreSelect, useSelect } from '@/components';
-import { relativeTime } from '@/utils';
+import { relativeTime, storeUserId } from '@/utils';
 import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
@@ -14,13 +14,7 @@ import { useEffect, useState } from 'react';
 import { FeedbackComment } from './FeedbackComment';
 import { userIdStore } from '@/store/userId';
 
-export const FeedbackDetail = ({
-  id,
-  userId,
-}: {
-  id: string;
-  userId: string;
-}) => {
+export const FeedbackDetail = ({ id }: { id: string }) => {
   const [showComment, setShowComment] = useState<boolean>(false);
   const [commentCnt, setCommentCnt] = useState<number>(0);
   const router = useRouter();
@@ -30,7 +24,7 @@ export const FeedbackDetail = ({
     staleTime: 60 * 1000 * 10,
   });
 
-  const { updateUserId } = userIdStore();
+  const { userId, updateUserId } = userIdStore();
   const { Result } = useMoonerDown(data?.content);
   const { modal, toggleModal } = useSelect<'share' | 'more'>();
 
@@ -46,7 +40,7 @@ export const FeedbackDetail = ({
   }, [id, data]);
 
   useEffect(() => {
-    updateUserId(userId);
+    storeUserId(updateUserId);
   }, []);
 
   return (
@@ -58,7 +52,7 @@ export const FeedbackDetail = ({
           <>
             <div className="flex flex-col gap-4">
               <FeedbackChip status={data.status} large />
-              <h3 className="text-titleLarge">{data.title}</h3>
+              <h1 className="text-titleLarge">{data.title}</h1>
               <div className="flex items-center gap-3">
                 <Image
                   src={data.users.profile_image || '/images/DefaultProfile.png'}

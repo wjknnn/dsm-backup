@@ -6,3 +6,4 @@ export { convertToWebp } from './convertToWebp';
 export { uploadImage } from './uploadImage';
 export { OneSignalProvider } from './providers/OneSignalProvider';
 export { isSined } from './isSined';
+export { storeUserId } from './storeUserId';
