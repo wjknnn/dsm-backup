@@ -27,7 +27,7 @@ export default function Index() {
         <div className="flex flex-wrap items-end justify-between w-full gap-x-8 gap-y-2">
           <h3 className="text-title">요즘 인기 있는 토픽</h3>
           <Link
-            href="/tip"
+            href="/topic"
             className="flex items-center gap-2 text-grayDark1 hover:text-grayDark15 dark:hover:text-grayBase [&>svg]:hover:translate-x-1"
           >
             <p className="text-bodyLarge2">모든 토픽 보러가기</p>

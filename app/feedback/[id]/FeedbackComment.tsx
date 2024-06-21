@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { userIdStore } from '@/store/userId';
+import { useRouter } from 'next/navigation';
 
 export const FeedbackComment = ({
   id,
@@ -23,11 +24,12 @@ export const FeedbackComment = ({
     staleTime: 1000 * 10,
   });
 
+  const router = useRouter();
   const { userId } = userIdStore();
   const supabase = createClient();
 
   const commentRegister = async () => {
-    if (!isSined('로그인 후 댓글을 작성해 보세요.')) return;
+    if (!userId && !alert('로그인 후 댓글을 작성해 보세요.')!) return;
     const feedbackC = { comment: comment, writer: userId, feedback: +id };
     const answerC = { comment: comment, writer: userId, answer: +id };
     const { error } = await supabase
@@ -43,7 +45,7 @@ export const FeedbackComment = ({
   };
 
   const commentHandler = async (writer: string, commentId: number) => {
-    if ((await userId) === writer) {
+    if (userId === writer) {
       if (!confirm('댓글을 삭제하실건가요?')) return;
       if (!isSined('로그인 후 댓글을 삭제해 보세요.')) return;
       const { error } = await supabase
@@ -64,7 +66,10 @@ export const FeedbackComment = ({
       <div className="flex flex-col gap-2 p-6 rounded-[18px] border border-grayLight1 dark:border-grayDark15">
         <textarea
           value={comment}
-          onClick={() => isSined('로그인 후 댓글을 작성해 보세요.')}
+          onClick={() => {
+            if (!userId && !alert('로그인 후 댓글을 작성해 보세요.')!)
+              router.push('/login');
+          }}
           onChange={(e) => setComment(e.currentTarget.value)}
           className="resize-none min-h-[120px] h-fit focus:outline-none bg-transparent"
           placeholder="게시글에 관련된 자신의 의견을 작성해 보세요.."

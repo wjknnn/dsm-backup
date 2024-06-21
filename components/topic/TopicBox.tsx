@@ -20,7 +20,7 @@ export const TopicBox = () => {
           href={`/topic/${value.id}`}
           className="flex flex-col w-full bg-grayLight2 dark:bg-grayDark2 rounded-2xl group"
         >
-          <div className="flex justify-center w-full border bg-gradient-to-t from-white dark:from-grayDark3 dark:to-grayDark2 rounded-2xl border-grayLight2 dark:border-grayDark2">
+          <div className="flex justify-center w-full p-[23px_24px] border bg-gradient-to-t from-white dark:from-grayDark3 dark:to-grayDark2 rounded-2xl border-grayLight2 dark:border-grayDark2">
             <Image
               src={value.image}
               alt={`${value.title} thumbnail`}

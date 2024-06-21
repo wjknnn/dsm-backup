@@ -3,10 +3,10 @@ import { Pen } from '@/assets';
 import { Button } from '@/components';
 import { useQuery } from '@tanstack/react-query';
 import { Answer } from './Answer';
-import { getCookie, isSined } from '@/utils';
 import { useState } from 'react';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { createClient } from '@/utils/supabase/client';
+import { userIdStore } from '@/store';
 
 export const FeedbackAnswer = ({
   id,
@@ -23,10 +23,10 @@ export const FeedbackAnswer = ({
   });
 
   const { Editor, Result, texts, clear } = useMoonerDown();
-  const userId = getCookie('userId') || '';
+  const { userId } = userIdStore();
 
   const answerHandler = () => {
-    if (!isSined('로그인 후 피드백을 작성해 보세요.')) return;
+    if (!userId && !alert('로그인 후 피드백을 작성해 보세요.')!) return;
     setOpenAnswer(true);
   };
 
