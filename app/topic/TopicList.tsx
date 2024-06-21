@@ -2,6 +2,7 @@
 
 import { getTopicList } from '@/apis';
 import { Vote } from '@/assets';
+import { TopicSkeleton } from '@/components';
 import { topicPageStore } from '@/store';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -31,7 +32,7 @@ export const TopicList = ({ max }: { max: number }) => {
   return (
     <div className="flex flex-col">
       {isLoading ? (
-        <>loading...</>
+        <TopicSkeleton />
       ) : (
         data && (
           <section className="grid grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-x-4 gap-y-8">
