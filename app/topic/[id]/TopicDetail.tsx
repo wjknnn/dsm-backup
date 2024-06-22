@@ -11,17 +11,18 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const TopicDetail = ({ id }: { id: string }) => {
+  const [isChange, setIsChange] = useState<boolean>(false);
   const [vote, setVote] = useState<string | null>(null);
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['topic detail', id],
     queryFn: () => getTopic(id),
   });
 
+  const supabase = createClient();
   const router = useRouter();
   const { userId, updateUserId } = userIdStore();
 
   const getVote = async () => {
-    const supabase = createClient();
     const { data, error } = await supabase
       .from('topic_vote')
       .select('*')
@@ -33,13 +34,46 @@ export const TopicDetail = ({ id }: { id: string }) => {
     }
   };
 
-  useEffect(() => {
-    userId && getVote();
-  }, [userId]);
+  const changeHandler = async (changed: string) => {
+    if (!userId && !alert('로그인 후 투표해 주세요.')!) {
+      router.push('/login');
+      return;
+    }
+    if (vote === 'A' && changed === 'B') {
+      setIsChange(true);
+    } else if (vote === 'B' && changed === 'A') {
+      setIsChange(true);
+    } else {
+      setIsChange(false);
+    }
+    if (vote) {
+      const { error } = await supabase
+        .from('topic_vote')
+        .update({ key: changed })
+        .match({ topic_id: +id, user_id: userId });
+      if (error) console.log(error);
+    } else {
+      const { error } = await supabase
+        .from('topic_vote')
+        .insert({ topic_id: +id, user_id: userId, key: changed });
+      if (error) console.log(error);
+      else {
+        refetch();
+        setVote(changed);
+      }
+    }
+  };
 
   useEffect(() => {
+    setVote(null);
+    userId && getVote();
+  }, [userId, id]);
+
+  useEffect(() => {
+    refetch();
     storeUserId(updateUserId);
-  }, []);
+    setIsChange(false);
+  }, [id]);
 
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-6 animate-in">
@@ -87,9 +121,12 @@ export const TopicDetail = ({ id }: { id: string }) => {
               </div>
               <div className="flex sm:max-w-[360px] sm:w-full gap-6">
                 <button
-                  disabled={vote === 'A'}
+                  onClick={() => changeHandler('A')}
+                  disabled={
+                    (vote === 'A' && !isChange) || (vote === 'B' && isChange)
+                  }
                   className={`flex w-[208px] sm:w-full h-[72px] justify-center items-center rounded-[18px] gap-2 border border-grayLight1 dark:border-grayDark15 ${
-                    vote === 'A'
+                    (vote === 'A' && !isChange) || (vote === 'B' && isChange)
                       ? 'bg-attention text-white'
                       : 'bg-white dark:bg-grayDark3 hover:bg-attentionBackground dark:hover:bg-grayDark2'
                   }`}
@@ -97,18 +134,39 @@ export const TopicDetail = ({ id }: { id: string }) => {
                   {vote ? (
                     <>
                       <p className="text-title">
-                        {(data.num_a / (data.num_a + data.num_b)) * 100}%
+                        {isChange
+                          ? vote === 'A'
+                            ? ((data.num_a - 1) /
+                                (data.num_a - 1 + data.num_b + 1)) *
+                              100
+                            : vote === 'B' &&
+                              ((data.num_a + 1) /
+                                (data.num_a + 1 + data.num_b - 1)) *
+                                100
+                          : (data.num_a / (data.num_a + data.num_b)) * 100}
+                        %
                       </p>
-                      <p className="text-bodyLarge2">({data.num_a}명)</p>
+                      <p className="text-bodyLarge2">
+                        (
+                        {isChange
+                          ? vote === 'A'
+                            ? data.num_a - 1
+                            : vote === 'B' && data.num_a + 1
+                          : data.num_a}
+                        명)
+                      </p>
                     </>
                   ) : (
                     <p className="text-title">A</p>
                   )}
                 </button>
                 <button
-                  disabled={vote === 'B'}
+                  onClick={() => changeHandler('B')}
+                  disabled={
+                    (vote === 'B' && !isChange) || (vote === 'A' && isChange)
+                  }
                   className={`flex w-[208px] sm:w-full h-[72px] justify-center items-center rounded-[18px] gap-2 border border-grayLight1 dark:border-grayDark15 ${
-                    vote === 'B'
+                    (vote === 'B' && !isChange) || (vote === 'A' && isChange)
                       ? 'bg-attention text-white'
                       : 'bg-white dark:bg-grayDark3 hover:bg-attentionBackground dark:hover:bg-grayDark2'
                   }`}
@@ -116,9 +174,27 @@ export const TopicDetail = ({ id }: { id: string }) => {
                   {vote ? (
                     <>
                       <p className="text-title">
-                        {(data.num_b / (data.num_a + data.num_b)) * 100}%
+                        {isChange
+                          ? vote === 'A'
+                            ? ((data.num_b + 1) /
+                                (data.num_a - 1 + data.num_b + 1)) *
+                              100
+                            : vote === 'B' &&
+                              ((data.num_b - 1) /
+                                (data.num_a + 1 + data.num_b - 1)) *
+                                100
+                          : (data.num_b / (data.num_a + data.num_b)) * 100}
+                        %
                       </p>
-                      <p className="text-bodyLarge2">({data.num_b}명)</p>
+                      <p className="text-bodyLarge2">
+                        (
+                        {isChange
+                          ? vote === 'A'
+                            ? data.num_b + 1
+                            : vote === 'B' && data.num_b - 1
+                          : data.num_b}
+                        명)
+                      </p>
                     </>
                   ) : (
                     <p className="text-title">B</p>
