@@ -2,7 +2,12 @@
 
 import { deleteFeedback, getFeedback } from '@/apis';
 import { Chat, More, Share } from '@/assets';
-import { FeedbackChip, MoreSelect, useSelect } from '@/components';
+import {
+  FeedbackChip,
+  FeedbackSkeleton,
+  MoreSelect,
+  useSelect,
+} from '@/components';
 import { relativeTime, storeUserId } from '@/utils';
 import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
@@ -46,7 +51,7 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-10">
       {isLoading ? (
-        <></>
+        <FeedbackSkeleton />
       ) : (
         data && (
           <>

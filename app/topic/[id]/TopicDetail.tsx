@@ -2,6 +2,7 @@
 
 import { getTopic } from '@/apis';
 import { Arrow, Vote } from '@/assets';
+import { TopicSkeleton } from '@/components';
 import { userIdStore } from '@/store/userId';
 import { storeUserId } from '@/utils';
 import { createClient } from '@/utils/supabase/client';
@@ -78,7 +79,7 @@ export const TopicDetail = ({ id }: { id: string }) => {
   return (
     <section className="max-w-[800px] w-full flex flex-col gap-6 animate-in">
       {isLoading ? (
-        <></>
+        <TopicSkeleton />
       ) : (
         data && (
           <>

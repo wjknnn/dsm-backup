@@ -2,7 +2,7 @@
 
 import { getFeedbackList } from '@/apis';
 import { ImageIcon, List, Post } from '@/assets';
-import { FeedbackChip, FeedbackSkeleton } from '@/components';
+import { FeedbackChip, FeedbackListSkeleton } from '@/components';
 import { feedbackPageStore } from '@/store';
 import { FeedbackOrderType } from '@/types';
 import { relativeTime } from '@/utils';
@@ -178,7 +178,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
             </Link>
           ))
         ) : isLoading ? (
-          <FeedbackSkeleton />
+          <FeedbackListSkeleton />
         ) : isError ? (
           <p>error!!</p>
         ) : null}

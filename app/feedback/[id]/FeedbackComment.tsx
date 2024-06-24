@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { userIdStore } from '@/store/userId';
 import { useRouter } from 'next/navigation';
+import { FeedbackCommentSkeleton } from '@/components';
 
 export const FeedbackComment = ({
   id,
@@ -93,9 +94,13 @@ export const FeedbackComment = ({
           </button>
         </div>
       </div>
-      {data && data.length > 0 && (
-        <section className="flex flex-col">
-          {data.map((value, index) => (
+      <section className="flex flex-col">
+        {isLoading ? (
+          <FeedbackCommentSkeleton />
+        ) : (
+          data &&
+          data.length > 0 &&
+          data.map((value, index) => (
             <div key={value.id} className="flex flex-col">
               <article className="flex flex-col gap-2 py-4">
                 <div className="flex items-center justify-between">
@@ -128,9 +133,9 @@ export const FeedbackComment = ({
                 <div className="bg-grayLight2 dark:bg-grayDark2 h-[1px]"></div>
               )}
             </div>
-          ))}
-        </section>
-      )}
+          ))
+        )}
+      </section>
     </section>
   );
 };
