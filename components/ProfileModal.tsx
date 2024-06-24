@@ -74,7 +74,7 @@ export const ProfileModal = ({
               <Arrow className="rotate-180 text-grayDark1" size={18} />
             </List>
             <hr className="border-grayLight1 dark:border-grayDark2 m-[8px]" />
-            <List link="/settings">
+            <List link="/setting">
               <div className="size-[36px] rounded-[8px] border border-grayLight1 dark:border-grayDark15 flex justify-center items-center">
                 <Setting size={20} className="text-grayDark1" />
               </div>

@@ -3,7 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { Footer, Navigator } from '@/components';
 import { OneSignalProvider, QueryProvider, ThemesProvider } from '@/utils';
-import Script from 'next/script';
+// import Script from 'next/script';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={Pretendard.className} suppressHydrationWarning>
       <head>
-        <meta
+        {/* <meta
           name="google-adsense-account"
           content={`ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS}`}
         />
@@ -37,21 +37,21 @@ export default function RootLayout({
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS}`}
           crossOrigin="anonymous"
           strategy="afterInteractive"
-        />
-        <Script
+        /> */}
+        {/* <Script
           async
           src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-        />
+        /> */}
       </head>
       <body>
         <QueryProvider>
           <ThemesProvider>
-            <OneSignalProvider>
-              <main className="min-h-[100dvh] flex flex-col items-center">
-                <Navigator />
-                {children}
-              </main>
-            </OneSignalProvider>
+            {/* <OneSignalProvider> */}
+            <main className="min-h-[100dvh] flex flex-col items-center">
+              <Navigator />
+              {children}
+            </main>
+            {/* </OneSignalProvider> */}
             <Footer />
           </ThemesProvider>
         </QueryProvider>
