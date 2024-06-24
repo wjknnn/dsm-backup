@@ -137,14 +137,20 @@ export const TopicDetail = ({ id }: { id: string }) => {
                       <p className="text-title">
                         {isChange
                           ? vote === 'A'
-                            ? ((data.num_a - 1) /
-                                (data.num_a - 1 + data.num_b + 1)) *
-                              100
+                            ? Math.floor(
+                                ((data.num_a - 1) /
+                                  (data.num_a - 1 + data.num_b + 1)) *
+                                  100
+                              )
                             : vote === 'B' &&
-                              ((data.num_a + 1) /
-                                (data.num_a + 1 + data.num_b - 1)) *
-                                100
-                          : (data.num_a / (data.num_a + data.num_b)) * 100}
+                              Math.floor(
+                                ((data.num_a + 1) /
+                                  (data.num_a + 1 + data.num_b - 1)) *
+                                  100
+                              )
+                          : Math.floor(
+                              (data.num_a / (data.num_a + data.num_b)) * 100
+                            )}
                         %
                       </p>
                       <p className="text-bodyLarge2">
@@ -177,14 +183,20 @@ export const TopicDetail = ({ id }: { id: string }) => {
                       <p className="text-title">
                         {isChange
                           ? vote === 'A'
-                            ? ((data.num_b + 1) /
-                                (data.num_a - 1 + data.num_b + 1)) *
-                              100
+                            ? Math.floor(
+                                ((data.num_b + 1) /
+                                  (data.num_a - 1 + data.num_b + 1)) *
+                                  100
+                              )
                             : vote === 'B' &&
-                              ((data.num_b - 1) /
-                                (data.num_a + 1 + data.num_b - 1)) *
-                                100
-                          : (data.num_b / (data.num_a + data.num_b)) * 100}
+                              Math.floor(
+                                ((data.num_b - 1) /
+                                  (data.num_a + 1 + data.num_b - 1)) *
+                                  100
+                              )
+                          : Math.floor(
+                              (data.num_b / (data.num_a + data.num_b)) * 100
+                            )}
                         %
                       </p>
                       <p className="text-bodyLarge2">
