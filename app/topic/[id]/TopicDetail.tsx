@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { TopicComment } from './TopicComment';
 
 export const TopicDetail = ({ id }: { id: string }) => {
   const [isChange, setIsChange] = useState<boolean>(false);
@@ -215,6 +216,12 @@ export const TopicDetail = ({ id }: { id: string }) => {
                 </button>
               </div>
             </article>
+            <TopicComment
+              topicId={+id}
+              commentData={data.comment}
+              commentCount={data.commentCount}
+              refetch={refetch}
+            />
           </>
         )
       )}

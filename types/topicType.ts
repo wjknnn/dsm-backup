@@ -6,6 +6,7 @@ export type TopicType = {
   num_b: number;
   created_at: string;
   comment: TopicCommentType[];
+  commentCount: number;
 };
 
 export type TopicCommentType = {
@@ -18,6 +19,7 @@ export type TopicCommentType = {
     name: string;
     profile_image?: string;
   };
+  like?: string[];
   recomment?: number;
   topic: number;
   recommentInfo: Omit<TopicCommentType, 'recommentInfo'>[];
