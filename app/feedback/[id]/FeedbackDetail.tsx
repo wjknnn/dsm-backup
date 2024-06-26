@@ -62,8 +62,8 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                 <Image
                   src={data.users.profile_image || '/images/DefaultProfile.png'}
                   alt="profile image"
-                  width={80}
-                  height={80}
+                  width={120}
+                  height={120}
                   className="object-cover bg-white border rounded-full cursor-pointer size-10 dark:bg-grayDark3 border-grayLight2 dark:border-grayDark2"
                   priority
                 />

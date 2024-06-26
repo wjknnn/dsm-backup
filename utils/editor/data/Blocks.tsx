@@ -638,14 +638,14 @@ export class Blocks {
       <Link
         href={url}
         target="_blank"
-        className="cursor-pointer mb-2 w-[90%] h-[80%] sm:w-[80%] sm:h-[70%]"
+        className="cursor-pointer mb-2 max-w-[90%] max-h-[640px] sm:max-w-[80%] sm:max-h-[70%]"
       >
         <Image
           src={url}
           alt={alt || ''}
           width={600}
           height={600}
-          className={`object-contain rounded-2xl w-full h-full`}
+          className={`object-contain rounded-2xl w-auto h-full`}
           priority
         />
       </Link>
