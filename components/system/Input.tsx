@@ -26,11 +26,13 @@ export const Input = ({
         type="text"
         placeholder={placeholder}
         autoComplete="off"
-        onChange={(e) =>
-          number
-            ? (e.target.value = e.target.value.replace(/[^1-3]/g, ''))
-            : null
-        }
+        onChange={(e) => {
+          if (number) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            if (+e.target.value > 10) e.target.value = e.target.value.slice(1);
+            if (+e.target.value === 0) e.target.value = '1';
+          }
+        }}
         {...props}
       />
     </div>

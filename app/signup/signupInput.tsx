@@ -15,7 +15,7 @@ export const SignupInput = () => {
     const jason = { id: userId, name: name, grade: +grade };
 
     if (await signup(token, jason)) {
-      return redirect('/protected');
+      return redirect('/');
     } else {
       alert('something wrong!');
     }
@@ -34,12 +34,12 @@ export const SignupInput = () => {
         <Input
           number
           name="grade"
-          title="학년"
+          title="기수"
           type="text"
           min={1}
-          max={3}
-          maxLength={1}
-          placeholder="학년을 입력해 주세요."
+          max={10}
+          maxLength={2}
+          placeholder="기수를 입력해 주세요."
         />
       </div>
       <SubmitButton formAction={signUp} pendingText="회원가입중...">

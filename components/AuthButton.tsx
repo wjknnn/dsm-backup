@@ -30,7 +30,7 @@ export async function AuthButton() {
     return redirect('/login');
   };
 
-  return user ? (
+  return userData ? (
     <div className="flex items-center gap-4 text-black dark:text-white">
       <ProfileModal logOut={signOut} user={userData} />
     </div>

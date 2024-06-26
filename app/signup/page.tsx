@@ -3,7 +3,7 @@ import { SignupInput } from './signupInput';
 import { isSignedUser } from '@/utils/serverIndex';
 
 export default async function Signup() {
-  if (await isSignedUser()) return redirect('/protected');
+  if (await isSignedUser()) return redirect('/');
 
   return (
     <section className="flex flex-col max-w-[448px] w-full p-[64px_24px] sm:p-[40px_24px_64px] gap-[64px] sm:gap-[40px]">

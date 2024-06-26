@@ -38,7 +38,7 @@ export const ProfileModal = ({
         className="w-[40px] h-[40px] rounded-full bg-grayLight2 border border-grayLight1 dark:bg-grayDark2 dark:border-grayDark2 overflow-hidden cursor-pointer"
       >
         <Image
-          src={user.profile_image || '/images/DefaultProfile.png'}
+          src={user?.profile_image || '/images/DefaultProfile.png'}
           alt="profile image"
           width={40}
           height={40}
@@ -58,7 +58,7 @@ export const ProfileModal = ({
             <List link="/users">
               <div className="size-[36px] rounded-full bg-grayLight2 dark:bg-grayDark2 border border-grayLight1 dark:border-grayDark2 overflow-hidden">
                 <Image
-                  src={user.profile_image || '/images/DefaultProfile.png'}
+                  src={user?.profile_image || '/images/DefaultProfile.png'}
                   alt="profile image"
                   width={40}
                   height={40}
@@ -68,7 +68,7 @@ export const ProfileModal = ({
               <div className="flex flex-col gap-[2px] flex-1">
                 <p className="text-bodyLarge">{user.name}</p>
                 <p className="text-body text-grayDark1">
-                  {user.school_grade}학년
+                  대마고 {user.school_grade}기
                 </p>
               </div>
               <Arrow className="rotate-180 text-grayDark1" size={18} />
