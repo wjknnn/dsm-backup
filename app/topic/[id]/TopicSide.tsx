@@ -3,7 +3,7 @@ import { NextTopic } from './NextTopic';
 
 export const TopicSide = ({ id }: { id: string }) => {
   return (
-    <aside className="flex flex-col max-w-[320px] w-full h-fit gap-6">
+    <aside className="flex flex-col lg:max-w-[320px] w-full h-fit gap-6">
       <article className="flex flex-col gap-3 p-6 border border-grayLight1 dark:border-grayDark15 rounded-[18px]">
         <div className="min-w-[272px] min-h-[153px] bg-grayLight1 dark:bg-grayDark2 animate-pulse border border-grayLight2 dark:border-grayDark2 rounded-lg">
           <AdBanner

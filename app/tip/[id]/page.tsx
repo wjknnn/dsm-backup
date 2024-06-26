@@ -1,7 +1,11 @@
-export default function TipDetailPage() {
+import { TipDetail } from './TipDetail';
+
+export default function TipDetailPage({ params }: { params: { id: string } }) {
+  const id = decodeURI(params.id);
+
   return (
-    <div>
-      <p>this is tip detail page!</p>
-    </div>
+    <main className="flex flex-col items-center max-w-[880px] w-full px-10 sm:px-6 pt-20 pb-[240px] sm:pt-10 gap-10">
+      <TipDetail id={id} />
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { getTipList } from '@/apis/tip/getTipList';
+import { getTipList } from '@/apis';
 import { TipListSkeleton } from '@/components';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';

@@ -9,7 +9,7 @@ import Link from 'next/link';
 export const TopicBox = () => {
   const { data } = useSuspenseQuery({
     queryKey: ['main topic'],
-    queryFn: () => getTopicList(1, 3),
+    queryFn: () => getTopicList(1, 4),
   });
 
   return (

@@ -9,3 +9,5 @@ export { getPopularFeedback } from './feedback/getPopularFeedback';
 export { getFeedbackComment } from './feedback/comment/getFeedbackComment';
 export { getFeedbackAnswer } from './feedback/answer/getFeedbackAnswer';
 export { getTopic } from './topic/getTopic';
+export { getTip } from './tip/getTip';
+export { getTipList } from './tip/getTipList';
