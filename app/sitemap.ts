@@ -32,5 +32,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'always',
       priority: 0.8,
     },
+    {
+      url: `${process.env.NEXT_PUBLIC_URL}/tip`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
   ];
 }
