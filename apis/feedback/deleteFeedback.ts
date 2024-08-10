@@ -1,11 +1,13 @@
-import { instance } from '../interceptor';
+import { createClient } from '@/utils/supabase/client';
 
-export const deleteFeedback = async (id: string, token: string) => {
-  return await instance({
-    method: 'DELETE',
-    url: `/feedback/${id}`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const deleteFeedback = async (id: string) => {
+  const supabase = createClient();
+  const { error } = await supabase.from('feedback').delete().eq('id', +id);
+
+  if (error) {
+    console.log(error);
+    return 0;
+  }
+
+  return 1;
 };

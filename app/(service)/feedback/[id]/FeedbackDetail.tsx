@@ -9,7 +9,6 @@ import {
   useSelect,
 } from '@/components';
 import { relativeTime, storeUserId } from '@/utils';
-import { getToken } from '@/utils/cookie/client';
 import useMoonerDown from '@/utils/editor/hook/useMoonerDown';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -34,8 +33,7 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
   const { modal, toggleModal } = useSelect<'share' | 'more'>();
 
   const deleteFeedbackHandler = async () => {
-    const token = getToken() || '';
-    await deleteFeedback(id, token)
+    await deleteFeedback(id)
       .then(() => router.replace('/feedback'))
       .catch((err) => alert(err));
   };
