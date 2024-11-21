@@ -3,24 +3,20 @@
 import { getFeedbackList } from '@/apis';
 import { ImageIcon, List, Post } from '@/assets';
 import { FeedbackChip, FeedbackListSkeleton } from '@/components';
-import { feedbackPageStore } from '@/store';
+import { useFeedbackListQuery } from '@/modules/useFeedbackQuery';
+import { feedbackStore } from '@/store';
 import { FeedbackOrderType } from '@/types';
 import { relativeTime } from '@/utils';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const FeedbackList = ({ max }: { max: number }) => {
-  const [order, setOrder] = useState<FeedbackOrderType>('latest');
-  const [isList, setIsList] = useState<boolean>(false);
-  const { page, updatePage } = feedbackPageStore();
+  const { page, order, isList, updatePage, updateOrder, updateIsList } =
+    feedbackStore();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['Feedback List', page, order, isList],
-    queryFn: () => getFeedbackList(page, order, isList ? 20 : 10),
-    staleTime: 10 * 1000,
-  });
+  const { data, isLoading, isError } = useFeedbackListQuery();
 
   const queryClient = useQueryClient();
 
@@ -36,12 +32,12 @@ export const FeedbackList = ({ max }: { max: number }) => {
 
   useEffect(() => {
     const initIsList = localStorage.getItem('isList');
-    setIsList(JSON.parse(initIsList!!));
+    updateIsList(JSON.parse(initIsList!!));
   }, []);
 
   const handleIsList = (value: boolean) => {
     if (isList !== value) {
-      setIsList(value);
+      updateIsList(value);
       updatePage(value ? Math.ceil(page / 2) : page * 2 - 1);
       if (typeof window !== 'object') return;
       localStorage.setItem('isList', `${value}`);
@@ -56,16 +52,19 @@ export const FeedbackList = ({ max }: { max: number }) => {
       <div className="flex items-center justify-end gap-4 py-6 border-b border-grayLight1 dark:border-grayDark2">
         <div className="flex gap-2 text-body2 text-grayDark1">
           <button
-            onClick={() => setOrder('popular')}
+            onClick={() => updateOrder('popular')}
             className={isOrder('popular')}
           >
             • 인기순
           </button>
-          <button onClick={() => setOrder('less')} className={isOrder('less')}>
+          <button
+            onClick={() => updateOrder('less')}
+            className={isOrder('less')}
+          >
             • 피드백적은순
           </button>
           <button
-            onClick={() => setOrder('latest')}
+            onClick={() => updateOrder('latest')}
             className={isOrder('latest')}
           >
             • 최신순
