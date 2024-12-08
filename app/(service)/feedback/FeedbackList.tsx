@@ -1,56 +1,56 @@
-'use client';
+'use client'
 
-import { getFeedbackList } from '@/apis';
-import { ImageIcon, List, Post } from '@/assets';
-import { FeedbackChip, FeedbackListSkeleton } from '@/components';
-import { useFeedbackListQuery } from '@/modules/useFeedbackQuery';
-import { feedbackStore } from '@/store';
-import { FeedbackOrderType } from '@/types';
-import { relativeTime } from '@/utils';
-import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect } from 'react';
+import { getFeedbackList } from '@/apis'
+import { ImageIcon, List, Post } from '@/assets'
+import { FeedbackChip, FeedbackListSkeleton } from '@/components'
+import { useFeedbackListQuery } from '@/modules/feedback'
+import { feedbackStore } from '@/store'
+import { FeedbackOrderType } from '@/types'
+import { relativeTime } from '@/utils'
+import { useQueryClient } from '@tanstack/react-query'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect } from 'react'
 
 export const FeedbackList = ({ max }: { max: number }) => {
   const { page, order, isList, updatePage, updateOrder, updateIsList } =
-    feedbackStore();
+    feedbackStore()
 
-  const { data, isLoading, isError } = useFeedbackListQuery();
+  const { data, isLoading, isError } = useFeedbackListQuery()
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (page <= max - 1) {
-      const nextPage = page + 1;
+      const nextPage = page + 1
       queryClient.prefetchQuery({
         queryKey: ['Feedback List', nextPage],
         queryFn: () => getFeedbackList(nextPage, order, isList ? 20 : 10),
-      });
+      })
     }
-  }, [page]);
+  }, [page])
 
   useEffect(() => {
-    const initIsList = localStorage.getItem('isList');
-    updateIsList(JSON.parse(initIsList!!));
-  }, []);
+    const initIsList = localStorage.getItem('isList')
+    updateIsList(JSON.parse(initIsList!!))
+  }, [])
 
   const handleIsList = (value: boolean) => {
     if (isList !== value) {
-      updateIsList(value);
-      updatePage(value ? Math.ceil(page / 2) : page * 2 - 1);
-      if (typeof window !== 'object') return;
-      localStorage.setItem('isList', `${value}`);
+      updateIsList(value)
+      updatePage(value ? Math.ceil(page / 2) : page * 2 - 1)
+      if (typeof window !== 'object') return
+      localStorage.setItem('isList', `${value}`)
     }
-  };
+  }
 
   const isOrder = (orderType: FeedbackOrderType) =>
-    order === orderType ? 'text-black text-bodyStrong dark:text-white' : '';
+    order === orderType ? 'text-black text-bodyStrong dark:text-white' : ''
 
   return (
     <>
-      <div className="flex items-center justify-end gap-4 py-6 border-b border-grayLight1 dark:border-grayDark2">
-        <div className="flex gap-2 text-body2 text-grayDark1">
+      <div className='flex items-center justify-end gap-4 py-6 border-b border-grayLight1 dark:border-grayDark2'>
+        <div className='flex gap-2 text-body2 text-grayDark1'>
           <button
             onClick={() => updateOrder('popular')}
             className={isOrder('popular')}
@@ -70,19 +70,19 @@ export const FeedbackList = ({ max }: { max: number }) => {
             • 최신순
           </button>
         </div>
-        <div className="h-4 w-[1px] bg-grayBase dark:bg-grayDark15" />
-        <div className="flex gap-2 text-grayDark1">
+        <div className='h-4 w-[1px] bg-grayBase dark:bg-grayDark15' />
+        <div className='flex gap-2 text-grayDark1'>
           <button
             onClick={() => handleIsList(true)}
             className={isList ? 'text-black dark:text-white' : ''}
-            aria-label="read to small list"
+            aria-label='read to small list'
           >
             <List size={20} />
           </button>
           <button
             onClick={() => handleIsList(false)}
             className={!isList ? 'text-black dark:text-white' : ''}
-            aria-label="read to large list"
+            aria-label='read to large list'
           >
             <Post size={20} />
           </button>
@@ -91,10 +91,10 @@ export const FeedbackList = ({ max }: { max: number }) => {
       <section>
         {data ? (
           data.map((value, index) => (
-            <Link key={index} href={`/feedback/${value.id}`} className="group">
+            <Link key={index} href={`/feedback/${value.id}`} className='group'>
               {isList ? (
-                <article className="flex items-center gap-4 py-3 border-b border-grayLight2 dark:border-grayDark2 text-body2 sm:flex-col sm:items-start sm:gap-2">
-                  <div className="flex items-center flex-1 gap-3">
+                <article className='flex items-center gap-4 py-3 border-b border-grayLight2 dark:border-grayDark2 text-body2 sm:flex-col sm:items-start sm:gap-2'>
+                  <div className='flex items-center flex-1 gap-3'>
                     <div
                       className={`rounded-full size-2 border dark:bg-opacity-20 ${
                         value.status === '피드백 요청'
@@ -106,31 +106,31 @@ export const FeedbackList = ({ max }: { max: number }) => {
                           : ''
                       }`}
                     ></div>
-                    <p className="text-bodyLarge">{value.title}</p>
+                    <p className='text-bodyLarge'>{value.title}</p>
                     {value.image && (
                       <ImageIcon
                         size={20}
-                        className="text-grayBase dark:text-grayDark1"
+                        className='text-grayBase dark:text-grayDark1'
                       />
                     )}
                   </div>
-                  <div className="flex items-center gap-4 sm:gap-3">
-                    <p className="w-20 sm:w-fit sm:text-body text-grayDark15 dark:text-grayBase">
+                  <div className='flex items-center gap-4 sm:gap-3'>
+                    <p className='w-20 sm:w-fit sm:text-body text-grayDark15 dark:text-grayBase'>
                       피드백 {value.feedback}
                     </p>
-                    <p className="text-grayDark1 sm:text-body w-[160px] md:w-20 sm:w-fit">
+                    <p className='text-grayDark1 sm:text-body w-[160px] md:w-20 sm:w-fit'>
                       {value.users.name}
                     </p>
-                    <p className="w-20 sm:w-fit text-grayDark1 sm:text-body text-end">
+                    <p className='w-20 sm:w-fit text-grayDark1 sm:text-body text-end'>
                       {value.created_at && relativeTime(value.created_at)}
                     </p>
                   </div>
                 </article>
               ) : (
-                <article className="min-h-[200px] w-full flex sm:flex-col-reverse gap-16 sm:gap-4 p-[24px_0_32px] border-b border-grayLight2 dark:border-grayDark2">
-                  <div className="flex flex-col w-full gap-3 py-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="transition-all text-subtitle text-pretty group-hover:font-bold">
+                <article className='min-h-[200px] w-full flex sm:flex-col-reverse gap-16 sm:gap-4 p-[24px_0_32px] border-b border-grayLight2 dark:border-grayDark2'>
+                  <div className='flex flex-col w-full gap-3 py-1'>
+                    <div className='flex items-center gap-2'>
+                      <h4 className='transition-all text-subtitle text-pretty group-hover:font-bold'>
                         {value.title}
                       </h4>
                       <FeedbackChip status={value.status} />
@@ -142,21 +142,21 @@ export const FeedbackList = ({ max }: { max: number }) => {
                     >
                       {value.explanation}
                     </p>
-                    <div className="flex gap-[6px]">
+                    <div className='flex gap-[6px]'>
                       {value.tags?.map((value, index) => (
                         <div
                           key={`tag-${index}`}
-                          className="p-[4px_8px] text-body2 rounded-full bg-grayLight2 text-grayDark15 dark:bg-grayDark2 dark:text-grayBase"
+                          className='p-[4px_8px] text-body2 rounded-full bg-grayLight2 text-grayDark15 dark:bg-grayDark2 dark:text-grayBase'
                         >
                           #{value}
                         </div>
                       ))}
                     </div>
-                    <div className="flex gap-3 text-body2">
-                      <p className="text-grayDark15 dark:text-grayBase">
+                    <div className='flex gap-3 text-body2'>
+                      <p className='text-grayDark15 dark:text-grayBase'>
                         피드백 {value.feedback}
                       </p>
-                      <p className="text-grayDark1">
+                      <p className='text-grayDark1'>
                         {value.users.name} ∙{' '}
                         {value.created_at && relativeTime(value.created_at)}
                       </p>
@@ -168,7 +168,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
                       alt={`${value.title} thumbnail`}
                       width={480}
                       height={270}
-                      className="w-[256px] sm:w-full h-fit rounded-xl border-[1.6px] border-grayLight2 dark:border-grayDark15 aspect-video object-cover"
+                      className='w-[256px] sm:w-full h-fit rounded-xl border-[1.6px] border-grayLight2 dark:border-grayDark15 aspect-video object-cover'
                       priority
                     />
                   )}
@@ -182,7 +182,7 @@ export const FeedbackList = ({ max }: { max: number }) => {
           <p>error!!</p>
         ) : null}
       </section>
-      <div className="flex justify-center gap-1 py-20">
+      <div className='flex justify-center gap-1 py-20'>
         {[...new Array(isList ? Math.ceil(max / 2) : max)].map((_, i) => (
           <button
             key={i}
@@ -204,5 +204,5 @@ export const FeedbackList = ({ max }: { max: number }) => {
         ))}
       </div>
     </>
-  );
-};
+  )
+}

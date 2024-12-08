@@ -1,52 +1,36 @@
 'use client'
 
-import { deleteFeedback, getFeedback } from '@/apis'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useFeedbackDelete, useFeedbackQuery } from '@/modules/feedback'
+import { userIdStore } from '@/store/userId'
+import { relativeTime, storeUserId } from '@/utils'
+import useMoonerDown from '@/utils/editor/hook/useMoonerDown'
 import { Chat, More, Share } from '@/assets'
 import {
   FeedbackChip,
+  FeedbackNotFound,
   FeedbackSkeleton,
   MoreSelect,
   useSelect,
 } from '@/components'
-import { relativeTime, storeUserId } from '@/utils'
-import useMoonerDown from '@/utils/editor/hook/useMoonerDown'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { FeedbackAnswer } from './FeedbackAnswer'
-import { useEffect, useState } from 'react'
 import { FeedbackComment } from './FeedbackComment'
-import { userIdStore } from '@/store/userId'
-import { FeedbackQuery } from '@/modules/useFeedbackQuery'
 
 export const FeedbackDetail = ({ id }: { id: string }) => {
   const [showComment, setShowComment] = useState<boolean>(false)
-  const [commentCnt, setCommentCnt] = useState<number>(0)
-  const router = useRouter()
-  const { data, isLoading } = useQuery({
-    queryKey: ['Feedback Detail', id],
-    queryFn: () => getFeedback(id),
-    staleTime: 60 * 1000 * 10,
-  })
-
-  const queryClient = useQueryClient()
 
   const { userId, updateUserId } = userIdStore()
-  const { Result } = useMoonerDown(data?.content)
   const { modal, toggleModal } = useSelect<'share' | 'more'>()
 
-  const deleteFeedbackHandler = async () => {
-    await deleteFeedback(id)
-      .then(() => {
-        queryClient.refetchQueries({ queryKey: FeedbackQuery.feedbackList })
-        router.replace('/feedback')
-      })
-      .catch((err) => alert(err))
-  }
+  const { data: feedback, isLoading, error } = useFeedbackQuery(id)
+  const { mutate: remove } = useFeedbackDelete(id)
 
-  useEffect(() => {
-    setCommentCnt(data?.feedback_comment || 0)
-  }, [id, data])
+  const { Result } = useMoonerDown(feedback?.content)
+
+  const handleDeleteFeedback = () => {
+    remove()
+  }
 
   useEffect(() => {
     storeUserId(updateUserId)
@@ -56,15 +40,19 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
     <section className='max-w-[800px] w-full flex flex-col gap-10'>
       {isLoading ? (
         <FeedbackSkeleton />
+      ) : error?.response?.status === 404 ? (
+        <FeedbackNotFound />
       ) : (
-        data && (
+        feedback && (
           <>
             <div className='flex flex-col gap-4'>
-              <FeedbackChip status={data.status} large />
-              <h1 className='text-titleLarge'>{data.title}</h1>
+              <FeedbackChip status={feedback.status} large />
+              <h1 className='text-titleLarge'>{feedback.title}</h1>
               <div className='flex items-center gap-3'>
                 <Image
-                  src={data.users.profile_image || '/images/DefaultProfile.png'}
+                  src={
+                    feedback.users.profile_image || '/images/DefaultProfile.png'
+                  }
                   alt='profile image'
                   width={120}
                   height={120}
@@ -73,15 +61,15 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                 />
                 <div className='flex items-center gap-2 text-bodyLarge'>
                   <p className='text-grayDark2 dark:text-grayLight1'>
-                    {data.users.name}
+                    {feedback.users.name}
                   </p>
                   <div className='rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15'></div>
                   <p className='text-grayDark1 dark:text-grayBase'>
-                    조회수 {data.views}
+                    조회수 {feedback.views}
                   </p>
                   <div className='rounded-sm size-1 bg-grayLight1 dark:bg-grayDark15'></div>
                   <p className='text-grayDark1 dark:text-grayBase'>
-                    {data.created_at && relativeTime(data.created_at)}
+                    {feedback.created_at && relativeTime(feedback.created_at)}
                   </p>
                 </div>
               </div>
@@ -91,9 +79,9 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                 {Result}
               </div>
             </article>
-            {data.tags && (
+            {feedback.tags && (
               <div className='flex gap-[6px] pb-6 items-center flex-wrap'>
-                {data.tags.map((tagName) => (
+                {feedback.tags.map((tagName) => (
                   <button
                     key={tagName}
                     className='p-[8px_12px] rounded-full bg-grayLight2 dark:bg-grayDark2 text-bodyLarge text-grayDark15 dark:text-grayLight1 hover:bg-grayLight1 dark:hover:bg-grayDark15'
@@ -114,7 +102,9 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                   }`}
                 >
                   <Chat size={20} />
-                  {commentCnt > 0 && <p>{commentCnt}</p>}
+                  {feedback.feedback_comment > 0 && (
+                    <p>{feedback.feedback_comment}</p>
+                  )}
                 </button>
               </div>
               <div className='flex items-center gap-1'>
@@ -133,12 +123,12 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
                       list={[
                         {
                           name:
-                            userId === data.writer
+                            userId === feedback.writer
                               ? '피드백 요청글 삭제'
                               : '글 신고',
                           onClick: () =>
-                            userId === data.writer
-                              ? deleteFeedbackHandler()
+                            userId === feedback.writer
+                              ? handleDeleteFeedback()
                               : toggleModal('more'),
                         },
                       ]}
@@ -151,9 +141,9 @@ export const FeedbackDetail = ({ id }: { id: string }) => {
           </>
         )
       )}
-      {showComment && <FeedbackComment id={id} setCommentCnt={setCommentCnt} />}
+      {showComment && <FeedbackComment id={id} />}
       <div className='h-[1px] w-full bg-grayLight2 dark:bg-grayDark2'></div>
-      <FeedbackAnswer id={id} writer={data?.writer || ''} />
+      {feedback && <FeedbackAnswer id={id} writer={feedback?.writer || ''} />}
     </section>
   )
 }

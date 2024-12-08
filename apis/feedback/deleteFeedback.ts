@@ -1,13 +1,13 @@
-import { createClient } from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/client'
 
 export const deleteFeedback = async (id: string) => {
-  const supabase = createClient();
-  const { error } = await supabase.from('feedback').delete().eq('id', +id);
+  const supabase = createClient()
+  const { data, error } = await supabase.from('feedback').delete().eq('id', +id)
 
   if (error) {
-    console.log(error);
-    return 0;
+    console.log(error)
+    Promise.reject(error)
   }
 
-  return 1;
-};
+  return data
+}
