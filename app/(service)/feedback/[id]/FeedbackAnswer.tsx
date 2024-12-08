@@ -1,12 +1,11 @@
-import { getFeedbackAnswer } from '@/apis'
+import { useState } from 'react'
+import { useFeedbackAnswersQuery } from '@/modules/feedback'
+import { userIdStore } from '@/store'
+import { createClient } from '@/utils/supabase/client'
+import useMoonerDown from '@/utils/editor/hook/useMoonerDown'
 import { Pen } from '@/assets'
 import { Button } from '@/components'
-import { useQuery } from '@tanstack/react-query'
 import { Answer } from './Answer'
-import { useState } from 'react'
-import useMoonerDown from '@/utils/editor/hook/useMoonerDown'
-import { createClient } from '@/utils/supabase/client'
-import { userIdStore } from '@/store'
 
 export const FeedbackAnswer = ({
   id,
@@ -17,10 +16,7 @@ export const FeedbackAnswer = ({
 }) => {
   const [openAnswer, setOpenAnswer] = useState<boolean>(false)
   const [showMD, setShowMD] = useState<boolean>(false)
-  const { data, refetch } = useQuery({
-    queryKey: ['feedback answer', id],
-    queryFn: () => getFeedbackAnswer(id),
-  })
+  const { data, refetch } = useFeedbackAnswersQuery(id)
 
   const { Editor, Result, texts, clear } = useMoonerDown()
   const { userId } = userIdStore()
@@ -127,10 +123,10 @@ export const FeedbackAnswer = ({
               {data.map((answer) => (
                 <Answer
                   key={answer.id}
+                  id={id}
                   answer={answer}
                   userId={userId}
                   writer={writer}
-                  refetch={refetch}
                 />
               ))}
             </section>

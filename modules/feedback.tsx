@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   deleteFeedback,
   getFeedback,
+  getFeedbackAnswer,
   getFeedbackComment,
   getFeedbackList,
 } from '@/apis'
@@ -12,14 +13,22 @@ import { AxiosError } from 'axios'
 
 export const FeedbackQuery = {
   list: (page: number, order: FeedbackOrderType, isList: boolean) => [
-    'Feedback List',
+    'Feedback',
+    'List',
     page,
     order,
     isList,
   ],
-  detail: (id: string) => ['Feedback Detail', id],
+  detail: (id: string) => ['Feedback', 'Detail', id],
   delete: (id: string) => ['Feedback', 'Delete', id],
-  comment: (id: string, answer: boolean) => ['feedback comment', id, answer],
+  answerList: (id: string) => ['Feedback', 'Answer', 'List', id],
+  commentList: (id: string, answer: boolean) => [
+    'Feedback',
+    'Comment',
+    'List',
+    id,
+    answer,
+  ],
 }
 
 export const useFeedbackListQuery = () => {
@@ -58,9 +67,16 @@ export const useFeedbackDelete = (id: string) => {
   })
 }
 
+export const useFeedbackAnswersQuery = (id: string) => {
+  return useQuery({
+    queryKey: FeedbackQuery.answerList(id),
+    queryFn: () => getFeedbackAnswer(id),
+  })
+}
+
 export const useFeedbackCommentsQuery = (id: string, answer: boolean) => {
   return useQuery({
-    queryKey: FeedbackQuery.comment(id, answer),
+    queryKey: FeedbackQuery.commentList(id, answer),
     queryFn: () => getFeedbackComment(id, answer),
     staleTime: 1000 * 10,
   })
