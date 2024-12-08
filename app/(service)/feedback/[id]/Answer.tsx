@@ -13,12 +13,10 @@ import { FeedbackQuery } from '@/modules/feedback'
 
 export const Answer = ({
   answer,
-  id,
   userId,
   writer,
 }: {
   answer: FeedbackAnswerType
-  id: string
   userId: string
   writer: string
 }) => {
@@ -31,11 +29,6 @@ export const Answer = ({
 
   const { Result } = useMoonerDown(answer.content)
   const { modal, toggleModal } = useSelect<'share' | 'more'>()
-
-  const commentCount = useMemo(
-    () => answer.feedback_comment[0].count || 0,
-    [answer]
-  )
 
   const heartHandler = async () => {
     if (userId === '' && !alert('로그인 후 이용해 주세요.')!) {
@@ -65,7 +58,10 @@ export const Answer = ({
       .eq('id', answer.id)
 
     if (error) console.log(error)
-    else queryClient.refetchQueries({ queryKey: FeedbackQuery.answerList(id) })
+    else
+      queryClient.refetchQueries({
+        queryKey: FeedbackQuery.answerList(`${answer.feedback}`),
+      })
   }
 
   const answerPick = async () => {
@@ -75,7 +71,10 @@ export const Answer = ({
       .eq('id', answer.id)
 
     if (error) console.log(error)
-    else queryClient.refetchQueries({ queryKey: FeedbackQuery.answerList(id) })
+    else
+      queryClient.refetchQueries({
+        queryKey: FeedbackQuery.answerList(`${answer.feedback}`),
+      })
   }
 
   return (
@@ -150,7 +149,9 @@ export const Answer = ({
             }`}
           >
             <Chat size={20} />
-            {commentCount > 0 && <p>{commentCount}</p>}
+            {(answer.feedback_comment[0].count || 0) > 0 && (
+              <p>{answer.feedback_comment[0].count || 0}</p>
+            )}
           </button>
         </div>
         <div className='flex items-center gap-2'>
@@ -187,7 +188,9 @@ export const Answer = ({
           </div>
         </div>
       </div>
-      {showComment && <FeedbackComment id={`${answer.id}`} answer />}
+      {showComment && (
+        <FeedbackComment id={`${answer.feedback}`} answerId={`${answer.id}`} />
+      )}
     </article>
   )
 }

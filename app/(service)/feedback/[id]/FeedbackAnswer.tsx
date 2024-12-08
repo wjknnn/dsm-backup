@@ -123,7 +123,6 @@ export const FeedbackAnswer = ({
               {data.map((answer) => (
                 <Answer
                   key={answer.id}
-                  id={id}
                   answer={answer}
                   userId={userId}
                   writer={writer}

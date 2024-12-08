@@ -10,6 +10,8 @@ import {
 import { FeedbackListType, FeedbackOrderType, FeedbackType } from '@/types'
 import { feedbackStore } from '@/store'
 import { AxiosError } from 'axios'
+import { deleteComment } from '@/apis/feedback/comment/deleteComment'
+import { postComment } from '@/apis/feedback/comment/postComment'
 
 export const FeedbackQuery = {
   list: (page: number, order: FeedbackOrderType, isList: boolean) => [
@@ -29,6 +31,8 @@ export const FeedbackQuery = {
     id,
     answer,
   ],
+  commentPost: (id: string) => ['Feedback', 'Comment', 'Post', id],
+  commentDelete: (id: string) => ['Feedback', 'Comment', 'Delete', id],
 }
 
 export const useFeedbackListQuery = () => {
@@ -74,10 +78,57 @@ export const useFeedbackAnswersQuery = (id: string) => {
   })
 }
 
-export const useFeedbackCommentsQuery = (id: string, answer: boolean) => {
+export const useFeedbackCommentsQuery = (id: string, answerId?: string) => {
+  const targetId = answerId || id
+
   return useQuery({
-    queryKey: FeedbackQuery.commentList(id, answer),
-    queryFn: () => getFeedbackComment(id, answer),
+    queryKey: FeedbackQuery.commentList(targetId, !!answerId),
+    queryFn: () => getFeedbackComment(targetId, !!answerId),
     staleTime: 1000 * 10,
+  })
+}
+
+export const useFeedbackCommentPost = (
+  id: string,
+  userId: string,
+  answerId?: string
+) => {
+  const queryClient = useQueryClient()
+  const targetId = answerId || id
+
+  return useMutation({
+    mutationKey: FeedbackQuery.commentPost(targetId),
+    mutationFn: async (comment: string) =>
+      await postComment(id, comment, userId, answerId),
+    onSettled: () => {
+      queryClient.refetchQueries({
+        queryKey: FeedbackQuery.commentList(targetId, !!answerId),
+      })
+      if (answerId) {
+        queryClient.refetchQueries({
+          queryKey: FeedbackQuery.answerList(id),
+        })
+      } else queryClient.refetchQueries({ queryKey: FeedbackQuery.detail(id) })
+    },
+  })
+}
+
+export const useFeedbackCommentDelete = (id: string, answerId?: string) => {
+  const queryClient = useQueryClient()
+  const targetId = answerId || id
+
+  return useMutation({
+    mutationKey: FeedbackQuery.commentDelete(targetId),
+    mutationFn: async (commentId: string) => await deleteComment(commentId),
+    onSettled: () => {
+      queryClient.refetchQueries({
+        queryKey: FeedbackQuery.commentList(targetId, !!answerId),
+      })
+      if (answerId) {
+        queryClient.refetchQueries({
+          queryKey: FeedbackQuery.answerList(id),
+        })
+      } else queryClient.refetchQueries({ queryKey: FeedbackQuery.detail(id) })
+    },
   })
 }
